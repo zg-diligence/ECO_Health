@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, HttpResponseRedirect,  render_to_response
-from .forms import RegisterForm, UsernameLoginForm, EmailLoginForm
 
 def Index(request):
     return render(request, 'ECO/index.html')

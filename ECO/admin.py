@@ -1,27 +1,4 @@
 from django.contrib import admin
-from .models import Symptom, Treatment, Condition, RegisterInfo, Patient
+from .models import Symptom, Treatment, Disease, User, Evaluation, Positive, Negative, Daily
 
-@admin.register(Symptom)
-class SymptomAdmin(admin.ModelAdmin):
-    pass
-
-@admin.register(Treatment)
-class TreatmentAdmin(admin.ModelAdmin):
-    pass
-
-@admin.register(Condition)
-class ConditionAdmin(admin.ModelAdmin):
-    pass
-
-@admin.register(RegisterInfo)
-class RegisterInfo(admin.ModelAdmin):
-    pass
-
-@admin.register(Patient)
-class PatientAdmin(admin.ModelAdmin):
-    pass
-
-@admin.register(Patient)
-class PatientAdmin(admin.ModelAdmin):
-    pass
-
+admin.site.register([Symptom, Treatment, Disease, User, Evaluation, Positive, Negative, Daily])
