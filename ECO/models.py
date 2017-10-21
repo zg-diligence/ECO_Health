@@ -51,7 +51,7 @@ class User(models.Model):
     symptoms = models.ManyToManyField(Symptom)
     treatments = models.ManyToManyField(Treatment)
     evaluations = models.ManyToManyField(Evaluation)
-    is_diagnosed = models.BooleanField()
+    is_diagnosed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user_name
