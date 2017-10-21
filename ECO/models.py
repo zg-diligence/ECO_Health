@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Disease(models.Model):
     disease_name = models.CharField(max_length=30)
@@ -16,7 +17,7 @@ class Symptom(models.Model):
     diseases = models.ManyToManyField(Disease)
 
     def __str__(self):
-        self.symptom_name
+        return self.symptom_name
 
 class Treatment(models.Model):
     treatment_name = models.CharField(max_length=30,default=" ")
@@ -37,10 +38,8 @@ class Negative(models.Model):
     #side-effect
     symptom = models.ForeignKey(Symptom)
 
-class User(models.Model):
-    user_name = models.CharField(max_length=30,default=" ")
-    pass_word = models.CharField(max_length=30,default=" ")
-    email = models.EmailField()
+class UserInfo(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     #require the dimension of image
     image = models.ImageField(height_field=50,width_field=50)
     sex = models.CharField(max_length=10,default=" ")
@@ -54,7 +53,7 @@ class User(models.Model):
     is_diagnosed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user_name
+        return self.user.username
 
 class Daily(models.Model):
     date = models.DateField()
@@ -64,11 +63,7 @@ class Daily(models.Model):
     mood = models.CharField(max_length=20,default=" ")
     weight = models.FloatField()
     exercise_time = models.FloatField()
-    user = models.ForeignKey(User)
-
-
-
-
+    user = models.ForeignKey(UserInfo)
 
 
 
