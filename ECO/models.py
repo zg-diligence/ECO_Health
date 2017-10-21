@@ -23,6 +23,20 @@ class Treatment(models.Model):
     type = models.CharField(max_length=30,default=" ")
     symptoms = models.ManyToManyField(Symptom)
 
+class Evaluation(models.Model):
+    treatment = models.ForeignKey(Treatment)
+    score = models.IntegerField(default=-1)
+
+class Positive(models.Model):
+    from_eval = models.ForeignKey(Evaluation)
+    #target  symptom
+    symptom = models.ForeignKey(Symptom)
+
+class Negative(models.Model):
+    from_eval = models.ForeignKey(Evaluation)
+    #side-effect
+    symptom = models.ForeignKey(Symptom)
+
 class User(models.Model):
     user_name = models.CharField(max_length=30,default=" ")
     pass_word = models.CharField(max_length=30,default=" ")
@@ -36,24 +50,11 @@ class User(models.Model):
     diseases = models.ManyToManyField(Disease)
     symptoms = models.ManyToManyField(Symptom)
     treatments = models.ManyToManyField(Treatment)
+    evaluations = models.ManyToManyField(Evaluation)
+    is_diagnosed = models.BooleanField()
 
     def __str__(self):
         return self.user_name
-
-class Evaluation(models.Model):
-    treatment = models.ForeignKey(Treatment)
-
-class Positive(models.Model):
-    from_eval = models.ForeignKey(Evaluation)
-    #target  symptom
-    symptom = models.ForeignKey(Symptom)
-    score = models.IntegerField()
-
-class Negative(models.Model):
-    from_eval = models.ForeignKey(Evaluation)
-    #side-effect
-    symptom = models.ForeignKey(Symptom)
-    score = models.IntegerField()
 
 class Daily(models.Model):
     date = models.DateField()

@@ -1,4 +1,4 @@
 migrations/
 .idea/
 *.pyc
-setting.py
+settings.py
