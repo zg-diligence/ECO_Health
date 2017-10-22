@@ -1,8 +1,16 @@
+<<<<<<< HEAD
+from .views import *
+from django.conf.urls import url
+
+urlpatterns = [
+    url(r'^$',index, name='index'),
+=======
 from . import views
 from django.conf.urls import url
 
 urlpatterns = [
     url(r'^index/$', views.index, name='index'),
+>>>>>>> origin/master
     # url(r'^profile/about_me/$', views.UserInfo, name='about_me'),
     # url(r'^profile/user_conditions/$', views.UserConditions, name="user_disease"),
     # url(r'^profile/user_conditions/symptoms/$', views.UserSymptoms, name="user_symptoms"),
