@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import HttpResponse, render, render_to_response, HttpResponseRedirect
+from django.shortcuts import render, render_to_response, HttpResponseRedirect
 
 from .method import load_data_for_disease_page
 from .models import Symptom, Treatment, Disease, UserInfo, Evaluation, Positive, Negative, Daily
