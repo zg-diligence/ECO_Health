@@ -1,4 +1,4 @@
-from .models import Symptom, Treatment, Disease, User, Evaluation, Positive, Negative, Daily
+from .models import Symptom, Treatment, Disease, UserInfo, Evaluation, Positive, Negative, Daily
 
 #by disease's name , get the related symptoms and treatments
 def load_data_for_disease_page(disease_id):
