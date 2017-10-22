@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>ECO Health</title>
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        body {
+            padding-top: 20px;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            margin: 0 auto;
+            max-width: 1920px;
+        }
+
+        .container > hr {
+            margin: 60px 0;
+        }
+
+        .jumbotron {
+            background-image: url("/static/img/index.jpg");
+            height: 577px;
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .jumbotron h1 {
+            font-size: 100px;
+            line-height: 1;
+        }
+
+        .jumbotron img{
+            width: 120px;
+            height: 120px;
+            margin-top: 300px;
+        }
+
+        .marketing p + h4 {
+            margin-top: 28px;
+        }
+
+        .navbar .navbar-inner {
+            padding: 0;
+        }
+
+        .navbar .nav {
+            margin: 0;
+            display: table;
+            width: 100%;
+        }
+
+        .navbar .nav li {
+            display: table-cell;
+            width: 1%;
+            float: none;
+        }
+
+        .navbar .nav li a {
+            font-weight: bold;
+            text-align: center;
+            border-left: 1px solid rgba(255,255,255,.75);
+            border-right: 1px solid rgba(0,0,0,.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" >
+        <div class="row">
+            <div><h3 class="muted span2">ECO Health</h3></div>
+            <div><h3 class="muted span1 offset8">登录</h3></div>
+            <div><h3 class="muted span1">注册</h3></div>
+        </div>
+        <div class="masthead">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="container">
+                      <ul class="nav">
+                        <li class="active"><a href="#">主页</a></li>
+                        <li><a href="#">个人</a></li>
+                        <li><a href="#">疾病</a></li>
+                        <li><a href="#">症状</a></li>
+                        <li><a href="#">治疗</a></li>
+                        <li><a href="#">关于</a></li>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="jumbotron">
+            <div id="video_player" style="display: none;">
+                <video id="video_info" width="960" height="570" controls autoplay>
+                   <source src="/static/video/index.mp4" type="video/mp4">
+                </video>
+            </div>
+            <img id='video_btn' class="img-circle" src="/static/img/video_btn.png">
+        </div>
+
+        <hr>
+        <div class="row clearfix">
+		<div class="col-md-4 column">
+			<h2>
+				<span class="glyphicon glyphicon-leaf" style="color: rgb(132, 203, 60); font-size: 33px;"> 疾病</span>
+			</h2>
+			<p>
+				这里有你想知道的，病因病理一一洞察，病友提供症状特征治疗方案一目了然，更全面的认知是为了更精准的选择，你并不孤单
+			</p>
+			<p>
+				 <a class="btn" href="#">了解更多 »</a>
+			</p>
+		</div>
+		<div class="col-md-4 column">
+			<h2>
+				<span class="glyphicon glyphicon-tree-conifer" style="color: rgb(132, 203, 60); font-size: 33px;"> 个人主页
+				</span>
+			</h2>
+			<p>
+				这里有你曾经历的，时时记录身体状况，了解自己是为了健康在路上，变化看得见<br><br>
+
+			</p>
+			<p>
+				 <a class="btn" href="个人主页.html">了解更多 »</a>
+			</p>
+		</div>
+		<div class="col-md-4 column">
+			<h2>
+				<span class="glyphicon glyphicon-tree-deciduous" style="color: rgb(132, 203, 60); font-size: 33px;"> 社交
+				</span>
+			</h2>
+			<p>
+				这里有你感兴趣的，关注热点医疗新闻，结识病友分享点滴，不同种治疗过程真实记录，我们互帮互助是为了共同康复
+			</p>
+			<p>
+				 <a class="btn" href="社交.html">了解更多 »</a>
+			</p>
+		</div>
+	</div>
+
+        <hr>
+        <div class="footer"><p>&copy; Company 2017</p></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            //播放按键控制
+            $('#video_btn').mouseenter(function(){
+                $(this).animate({width:'120px', height:'120px'});
+            })             .mouseleave(function(){
+                $(this).animate({width:'100px', height:'100px'});
+            })             .on("click", function(){
+                $('#video_player').show();
+            });
+        });
+    </script>
+</body>
+</html>
