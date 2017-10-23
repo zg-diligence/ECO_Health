@@ -128,9 +128,12 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static/ECO').replace('\\', '/')
 
 STATICFILES_DIRS = [
     ('css', os.path.join(STATIC_ROOT, 'css').replace('\\', '/')),
-    ('js', os.path.join(STATIC_ROOT, 'js').replace('\\', '/')),
     ('img', os.path.join(STATIC_ROOT, 'img').replace('\\', '/')),
+    ('js', os.path.join(STATIC_ROOT, 'js').replace('\\', '/')),
     ('others', os.path.join(STATIC_ROOT, 'others').replace('\\', '/')),
 ]
 
-print(BASE_DIR, STATIC_ROOT, STATICFILES_DIRS)
+
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+# print(BASE_DIR, STATIC_ROOT, STATICFILES_DIRS)
