@@ -68,8 +68,16 @@ def home(request):
 def disease_index(request):
     all_disease = Disease.objects.all()
     context = {'all_disease':all_disease}
-
     return render(request,'ECO/',context)
+
+def symptom_index(request):
+    pass
+
+def person_index(request):
+    pass
+
+def social_index(request):
+    pass
 
 def disease_detail(request,disease_id):
     disease_name,disease_info, treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women = load_data_for_disease_page(disease_id)

@@ -8,7 +8,7 @@
 {% if all_disease %}
     <ul>
     {% for disease in all_disease %}
-        <li><a href="/ECO/disease/{{ disease.id }}/">{{ disease.disease_name }}</a></li>
+        <li><a href="{% url 'ECO:disease' disease.id %}">{{ disease.disease_name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
