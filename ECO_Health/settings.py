@@ -21,17 +21,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'lxfczr*0p0c9=@^11i$t_vtt)+b9ok^eitfi1$t)zfsc_kbge-'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']  # 设置允许访问的域名, *通配所有域名
 
 
 # Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',          # 认证框架的核心和默认的模型
-    'django.contrib.contenttypes',  # 允许权限与你创建的模型关联
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -53,7 +52,7 @@ ROOT_URLCONF = 'ECO_Health.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # 不属于单个app的模板
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,23 +116,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
-
-URL_LOGIN = '/ECO/'
-
+# 静态文件
 STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR,'static/ECO').replace('\\', '/')
-
+# STATIC_ROOT = os.path.join(BASE_DIR,'collected_static')  #用于收集部署
 STATICFILES_DIRS = [
-    ('css', os.path.join(STATIC_ROOT, 'css').replace('\\', '/')),
-    ('img', os.path.join(STATIC_ROOT, 'img').replace('\\', '/')),
-    ('js', os.path.join(STATIC_ROOT, 'js').replace('\\', '/')),
-    ('others', os.path.join(STATIC_ROOT, 'others').replace('\\', '/')),
+    os.path.join(BASE_DIR, "static"),
 ]
 
-
-# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-
-# print(BASE_DIR, STATIC_ROOT, STATICFILES_DIRS)
+# 用户上传的文件
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR,'media')

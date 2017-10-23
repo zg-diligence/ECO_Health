@@ -4,7 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, render_to_response, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, render_to_response, \
+    HttpResponse, HttpResponseRedirect, get_object_or_404, get_list_or_404
 
 import json
 from .method import load_data_for_disease_page

@@ -1,4 +1,3 @@
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib import admin
@@ -11,6 +10,7 @@ urlpatterns = [
 ]
 
 if settings.DEBUG is False:
-    urlpatterns += staticfiles_urlpatterns()
+    # from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+    # urlpatterns += staticfiles_urlpatterns()  # django 1.8 以上不需要
     handler404 = views.page_not_found
     handler500 = views.page_error
