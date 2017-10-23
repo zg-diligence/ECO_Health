@@ -9,7 +9,7 @@ from django.shortcuts import render, render_to_response, \
 
 import json
 from .method import load_data_for_disease_page
-from .models import Symptom, Treatment, Disease, UserInfo, Evaluation, Positive, Negative, Daily
+from .models import Symptom, Treatment, Disease, UserInfo, Evaluation,Daily
 
 @csrf_exempt
 def page_not_found(request):
@@ -72,11 +72,22 @@ def disease_index(request):
     return render(request,'ECO/',context)
 
 def disease_detail(request,disease_id):
-    treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed = load_data_for_disease_page(disease_id)
+    disease_name,disease_info, treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women = load_data_for_disease_page(disease_id)
     context = {'treatments_for_symptoms':treatments_for_symptoms,'treatments_for_disease':treatments_for_disease}
     context['evaluations'] = evaluations
     context['ages'] = ages
     context['diagnosed'] = diagnosed
     context['undiagnosed'] = undiagnosed
+    context['disease_info'] = disease_info
+    context['num_men'] = num_men
+    context['num_women'] = num_women
+    context['disease_name'] = disease_name
+
+    counts = []
+    counts.append(len(treatments_for_symptoms))
+    counts.append(len(treatments_for_disease))
+    counts.append(len(evaluations))
+
+    context['counts'] = counts
 
     return render(request,'ECO/',context)

@@ -24,32 +24,30 @@ class Treatment(models.Model):
     type = models.CharField(max_length=30,default=" ")
     symptoms = models.ManyToManyField(Symptom)
 
+    def __str__(self):
+        return self.treatment_name
+
 class Evaluation(models.Model):
     treatment = models.ForeignKey(Treatment)
-    score = models.IntegerField(default=-1)
+    score = models.CharField(max_length=5,blank=True)
+    negative_symptoms = models.ManyToManyField(Symptom)
 
-class Positive(models.Model):
-    from_eval = models.ForeignKey(Evaluation)
-    #target  symptom
-    symptom = models.ForeignKey(Symptom)
-
-class Negative(models.Model):
-    from_eval = models.ForeignKey(Evaluation)
-    #side-effect
-    symptom = models.ForeignKey(Symptom)
+    def __str__(self):
+        return str(self.id)
 
 class UserInfo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     #require the dimension of image
-    image = models.ImageField(height_field=50,width_field=50)
-    sex = models.CharField(max_length=10,default=" ")
+    image = models.ImageField(height_field=50,width_field=50,blank=True)
+    choice_index = (('F','女'),('M','男'))
+    sex = models.CharField(max_length=10,default="M",choices=choice_index)
     age = models.IntegerField()
     area = models.CharField(max_length=30,default=" ")
     person_infor = models.CharField(max_length=300,default=" ")
-    diseases = models.ManyToManyField(Disease)
-    symptoms = models.ManyToManyField(Symptom)
-    treatments = models.ManyToManyField(Treatment)
-    evaluations = models.ManyToManyField(Evaluation)
+    diseases = models.ManyToManyField(Disease,blank=True)
+    symptoms = models.ManyToManyField(Symptom,blank=True)
+    treatments = models.ManyToManyField(Treatment,blank=True)
+    evaluations = models.ManyToManyField(Evaluation,blank=True)
     is_diagnosed = models.BooleanField(default=False)
 
     def __str__(self):
@@ -64,6 +62,9 @@ class Daily(models.Model):
     weight = models.FloatField()
     exercise_time = models.FloatField()
     user = models.ForeignKey(UserInfo)
+
+    def __str__(self):
+        return self.id
 
 
 
