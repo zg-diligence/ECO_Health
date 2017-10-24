@@ -68,9 +68,12 @@ def home(request):
 def disease_index(request):
     all_disease = Disease.objects.all()
     context = {'all_disease':all_disease}
-    return render(request,'ECO/',context)
+    return render(request,'ECO/disease_index.html',context)
 
 def symptom_index(request):
+    pass
+
+def treatment_index(request):
     pass
 
 def person_index(request):
@@ -98,4 +101,4 @@ def disease_detail(request,disease_id):
 
     context['counts'] = counts
 
-    return render(request,'ECO/',context)
+    return render(request,'ECO/disease_detail.html',context)
