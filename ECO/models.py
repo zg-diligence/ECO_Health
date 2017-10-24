@@ -30,7 +30,11 @@ class Treatment(models.Model):
 
 class Evaluation(models.Model):
     treatment = models.ForeignKey(Treatment)
-    score = models.CharField(max_length=5,blank=True)
+    cost = models.DecimalField(max_digits=6, decimal_places=2,default=0)
+    choices = (('1','少于1个月'),('2','1-6个月'),('3','6-12个月'),('4','1年以上'))
+    use_time = models.CharField(max_length=2,choices=choices,blank=True)
+    negative_score = models.IntegerField(default=0)
+    positive_score = models.IntegerField(default=0)
     negative_symptoms = models.ManyToManyField(Symptom)
 
     def __str__(self):

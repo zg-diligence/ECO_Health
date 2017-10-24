@@ -8,12 +8,12 @@ disease_pattern = [
 
 symptom_pattern = [
     url(r'^$', symptom_index, name='symptom_index'),
-    url(r'^(?P<symptom_id>[0-9]+)/$', disease_detail, name='symptom_detail'),
+    url(r'^(?P<symptom_id>[0-9]+)/$', symptom_detail, name='symptom_detail'),
 ]
 
 treatment_pattern = [
     url(r'^$', treatment_index, name='treatment_index'),
-    url(r'^(?P<treatment_id>[0-9]+)/$', disease_detail, name='treatment_detail'),
+    url(r'^(?P<treatment_id>[0-9]+)/$', treatment_detail, name='treatment_detail'),
 ]
 
 person_pattern = [

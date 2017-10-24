@@ -8,8 +8,8 @@ from django.shortcuts import render, render_to_response, \
     HttpResponse, HttpResponseRedirect, get_object_or_404, get_list_or_404
 
 import json
-from .method import load_data_for_disease_page
-from .models import Symptom, Treatment, Disease, UserInfo, Evaluation,Daily
+from .method import *
+from .models import *
 
 @csrf_exempt
 def page_not_found(request):
@@ -65,22 +65,22 @@ def home(request):
     print(user.username, user.email)
     return render(request, "ECO/home.html")
 
-def disease_index(request):
-    all_disease = Disease.objects.all()
-    context = {'all_disease':all_disease}
-    return render(request,'ECO/disease_index.html',context)
-
-def symptom_index(request):
-    pass
-
-def treatment_index(request):
-    pass
-
 def person_index(request):
     pass
 
 def social_index(request):
     pass
+
+def symptom_index(request):
+    pass
+
+def symptom_detail(request):
+    pass
+
+def disease_index(request):
+    all_disease = Disease.objects.all()
+    context = {'all_disease':all_disease}
+    return render(request,'ECO/disease_index.html',context)
 
 def disease_detail(request,disease_id):
     disease_name,disease_info, treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women = load_data_for_disease_page(disease_id)
@@ -102,3 +102,56 @@ def disease_detail(request,disease_id):
     context['counts'] = counts
 
     return render(request,'ECO/disease_detail.html',context)
+
+def treatment_index(request):
+    all_treatment = Treatment.objects.all()
+    context = {'all_treatment':all_treatment}
+    return render(request,'ECO/treatment_index.html',context)
+
+def treatment_detail(request,treatment_id):
+    the_treatment,target_symptom_and_num,num_side,num_effect,num_cost,num_time,negative_symptoms,counts = load_data_for_treatment_page(treatment_id)
+    context = {}
+    context['the_treatment'] = the_treatment
+    context['target_symptom_and_num'] = target_symptom_and_num
+    context['num_side'] = num_side
+    context['num_effect'] = num_effect
+    context['num_cost'] = num_cost
+    context['num_time'] = num_time
+    context['negative_symptoms'] = negative_symptoms
+    context['counts'] = counts
+
+    return  render(request,'ECO/treatment_detail.html',context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

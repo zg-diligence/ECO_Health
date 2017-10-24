@@ -90,7 +90,7 @@ def load_data_for_disease_page(disease_id):
 
             if flag:
                 evaluations[index]['num'] += 1
-                evaluations[index]['score'] = (evaluations[treatment_name]['score'] + evaluation.score)
+                evaluations[index]['score'] = (evaluations[treatment_name]['score'] + int(evaluation.positive_score))
                 evaluations[index]['score'] /= evaluations[treatment_name]['num']
                 negative_symptoms = evaluation.negative_symptoms.all()
                 for negative_symptom in negative_symptoms:
@@ -104,7 +104,7 @@ def load_data_for_disease_page(disease_id):
                 temp = {}
                 temp['treatment'] = evaluation.treatment
                 temp['num'] = 1
-                temp['score'] = evaluation.score
+                temp['score'] = int(evaluation.positive_score)
                 temp['symptom'] = []
                 negative_symptoms = evaluation.negative_symptoms.all()
                 for negative_symptom in negative_symptoms:
@@ -116,6 +116,100 @@ def load_data_for_disease_page(disease_id):
                 evaluations.append(temp)
 
     return disease_name,disease_info,treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women
+
+def load_data_for_treatment_page(treatment_id):
+    the_treatment = Treatment.objects.get(id=treatment_id)
+    taget_symptoms = the_treatment.symptoms.all()
+
+    #[ {'symptom':symptom1,'num':23} .....  ]
+    target_symptom_and_num = []
+
+    for s in taget_symptoms:
+        temp = {}
+        temp['symptom'] = s
+        temp['num'] = len(s.userinfo_set.all())
+        target_symptom_and_num.append(temp)
+
+    num_side = [0,0,0,0]
+    num_effect = [0,0,0,0]
+    num_cost = [0,0,0,0,0]
+    num_time = [0,0,0,0]
+    #[ {'symptom':symptom,'num':22} .....  ]
+    negative_symptoms = []
+
+    for e in the_treatment.evaluation_set.all():
+
+        if e.positive_score <=25:
+            num_effect[0] += 1
+        elif e.positive_score <= 50:
+            num_effect[1] += 1
+        elif e.positive_score <= 75:
+            num_effect[2] += 1
+        else:
+            num_effect[3] += 1
+
+        if e.negative_score <= 25:
+            num_side[0] += 1
+        elif e.negative_score <= 50:
+            num_side[1] += 1
+        elif e.negative_score <= 75:
+            num_side[2] += 1
+        else:
+            num_side[3] += 1
+
+        if e.use_time == '1':
+            num_time[0] += 1
+        elif e.use_time == '2':
+            num_time[1] += 1
+        elif e.use_time == '3':
+            num_time[2] += 1
+        else:
+            num_time[3] += 1
+
+        if e.cost <= 100:
+            num_cost[0] += 1
+        elif e.cost <= 200:
+            num_cost[1] += 1
+        elif e.cost <= 500:
+            num_cost[2] += 1
+        elif e.cost <= 1000:
+            num_cost[3] += 1
+        else:
+            num_cost[4] += 1
+
+        if s in e.negative_symptoms.all():
+            flag = False
+            index = 0
+            for i,x in enumerate(negative_symptoms):
+                if x['symptom'].symptom_name == s.symptom_name:
+                    flag = True
+                    index = i
+                    break
+            if flag:
+                negative_symptoms[index]['num'] += 1
+            else:
+                temp = {}
+                temp['symptom'] = s
+                temp['num'] = 1
+                negative_symptoms.append(temp)
+
+    counts = []
+    counts.append(len(target_symptom_and_num))
+    counts.append(len(negative_symptoms))
+    counts.append(sum(num_cost))
+
+    return the_treatment,target_symptom_and_num,num_side,num_effect,num_cost,num_time,negative_symptoms,counts
+
+
+
+
+
+
+
+
+
+
+
 
 
 
