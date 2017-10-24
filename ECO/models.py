@@ -21,6 +21,7 @@ class Symptom(models.Model):
 
 class Treatment(models.Model):
     treatment_name = models.CharField(max_length=30,default=" ")
+    treatment_info = models.CharField(max_length=500,blank=True)
     type = models.CharField(max_length=30,default=" ")
     symptoms = models.ManyToManyField(Symptom)
 

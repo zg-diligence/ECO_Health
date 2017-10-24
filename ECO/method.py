@@ -126,3 +126,6 @@ def load_data_for_disease_page(disease_id):
 
 
 
+
+
+
