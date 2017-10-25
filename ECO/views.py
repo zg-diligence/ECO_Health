@@ -72,7 +72,9 @@ def social_index(request):
     pass
 
 def symptom_index(request):
-    pass
+    all_symptom = Symptom.objects.all()
+    context = {'all_symptom':all_symptom}
+    return render(request,'ECO/symptom_index.html',context)
 
 def symptom_detail(request):
     pass
