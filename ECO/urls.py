@@ -27,7 +27,6 @@ social_pattern = [
 app_name = 'ECO'
 urlpatterns = [
     url(r'^$', index, name='index'),
-    url(r'^home$', home, name='home'),
     url(r'^user_login$', user_login, name='user_login'),
     url(r'^user_register$', user_register, name='user_register'),
     url(r'^user_logout$', user_logout, name='user_logout'),

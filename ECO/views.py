@@ -11,10 +11,6 @@ import json
 from .method import *
 from .models import *
 
-"""
-  自定义404页面
-"""
-
 @csrf_exempt
 def page_not_found(request):
     return render_to_response('404.html')
@@ -23,18 +19,9 @@ def page_not_found(request):
 def page_error(request):
     return render_to_response('500.html')
 
-"""
-  未登录与登录主页
-"""
-
 @csrf_exempt
 def index(request):
     return render(request, "ECO/index.html")
-
-
-"""
-  登录、注册、注销
-"""
 
 @csrf_exempt
 def user_login(request):
@@ -95,11 +82,6 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('ECO:index'))
 
-
-"""
-  症状页面
-"""
-
 @csrf_exempt
 def symptom_index(request):
     pass
@@ -114,11 +96,6 @@ def symptom_detail(request,symptom_id):
     context['counts'] = counts
     return  render(request,'ECO/symptom_detail.html',context)
 
-
-"""
-  个人页面
-"""
-
 @csrf_exempt
 def person_index(request):
     pass
@@ -127,11 +104,6 @@ def person_index(request):
 def person_detail(request):
     pass
 
-
-"""
-  社交页面
-"""
-
 @csrf_exempt
 def social_index(request):
     pass
@@ -139,11 +111,6 @@ def social_index(request):
 @csrf_exempt
 def social_detail(request):
     pass
-
-
-"""
-疾病页面
-"""
 
 @csrf_exempt
 def disease_index(request):
@@ -170,11 +137,6 @@ def disease_detail(request,disease_id):
 
     context['counts'] = counts
     return render(request,'ECO/disease_detail.html', context)
-
-
-"""
-  治疗方式页面
-"""
 
 @csrf_exempt
 def treatment_index(request):
