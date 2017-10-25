@@ -198,6 +198,66 @@ def load_data_for_treatment_page(treatment_id):
 
     return the_treatment,target_symptom_and_num,num_side,num_effect,num_cost,num_time,negative_symptoms,counts
 
+def load_data_for_symptom_page(symptom_id):
+    the_symptom = Symptom.objects.get(id=symptom_id)
+    diseases = the_symptom.diseases.all()
+    treatments = the_symptom.treatment_set.all()
+
+    #[ {'disease':disease1,'num':22} .....  ]
+    disease_and_num = []
+    for disease in diseases:
+        temp = {}
+        temp['num'] = disease.total_people
+        temp['disease'] = disease
+        disease_and_num.append(temp)
+
+    #[ {'treatment':t1,'num':33,'num_effect':[],'num_side':[] }........ ]
+    treatment_and_evaluations = []
+    for treatment in treatments:
+        temp = {}
+        temp['treatment'] = treatment
+        evaluations = treatment.evaluation_set.all()
+        temp['num'] = len(evaluations)
+
+        num_effect = [0,0,0,0]
+        num_side = [0,0,0,0]
+
+        for e in evaluations:
+            if e.positive_score <=25:
+                num_effect[0] += 1
+            elif e.positive_score <= 50:
+                num_effect[1] += 1
+            elif e.positive_score <= 75:
+                num_effect[2] += 1
+            else:
+                num_effect[3] += 1
+
+            if e.negative_score <= 25:
+                num_side[0] += 1
+            elif e.negative_score <= 50:
+                num_side[1] += 1
+            elif e.negative_score <= 75:
+                num_side[2] += 1
+            else:
+                num_side[3] += 1
+
+        temp['num_side'] = num_side
+        temp['num_effect'] = num_effect
+        treatment_and_evaluations.append(temp)
+
+    counts = []
+    counts.append(len(disease_and_num))
+    counts.append(len(treatment_and_evaluations))
+
+
+    return  the_symptom,disease_and_num,treatment_and_evaluations,counts
+
+
+
+
+
+
+
 
 
 

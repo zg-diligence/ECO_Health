@@ -31,10 +31,6 @@ def page_error(request):
 def index(request):
     return render(request, "ECO/index.html")
 
-@csrf_exempt
-@login_required
-def home(request):
-    return render(request, "ECO/home.html")
 
 """
   登录、注册、注销
@@ -109,8 +105,14 @@ def symptom_index(request):
     pass
 
 @csrf_exempt
-def symptom_detail(request):
-    pass
+def symptom_detail(request,symptom_id):
+    the_symptom,disease_and_num,treatment_and_evaluations,counts = load_data_for_symptom_page(symptom_id)
+    context = {}
+    context['the_symptom'] = the_symptom
+    context['disease_and_num'] = disease_and_num
+    context['treatment_and_evaluations'] = treatment_and_evaluations
+    context['counts'] = counts
+    return  render(request,'ECO/symptom_detail.html',context)
 
 
 """
