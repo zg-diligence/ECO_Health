@@ -16,19 +16,23 @@
         <div class="col-md-12 column">
             <nav class="navbar navbar-default navbar-inverse" role="navigation">
                 <div class="navbar-header">
-                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Eco-Health</a>
+                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                    <a class="navbar-brand" href="#">Eco-Health</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
+                        <li class="active">
+                             <a href="{% url 'ECO:index' %}">首页</a>
+                        </li>
                         <li class="active">
                              <a href="{% url 'ECO:disease_index' %}">疾病</a>
                         </li>
                         <li class="active">
                              <a href="{% url 'ECO:symptom_index' %}">症状</a>
                         </li>
-                        <li class="ECO/treatment_index/">
-                             <a href="">治疗手段</a>
+                        <li class="active">
+                             <a href="{% url 'ECO:treatment_index' %}">治疗手段</a>
                         </li>
                         <li class="active">
                              <a href="{% url 'ECO:person_index' %}">个人主页</a>

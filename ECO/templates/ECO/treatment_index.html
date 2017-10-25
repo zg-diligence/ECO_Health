@@ -65,14 +65,14 @@
         </div>
     </div>
     <div class="row clearfix">
-        {% if all_disease %}
+        {% if all_treatment %}
             <ul>
-             {% for disease in all_disease %}
-                <li><a href="{% url 'ECO:disease_detail' disease.id %}">{{ disease.disease_name }}</a></li>
+             {% for treatment in all_treatment %}
+                <li><a href="{% url 'ECO:treatment_detail' treatment.id %}">{{ treatment.treatment_name }}</a></li>
              {% endfor %}
             </ul>
         {% else %}
-            <p>No disease are available.</p>
+            <p>No treatment are available.</p>
         {% endif %}
     </div>
 </div>

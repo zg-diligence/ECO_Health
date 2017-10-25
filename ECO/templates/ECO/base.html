@@ -20,8 +20,8 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                     <ul class="nav navbar-nav">
-                         <li class="active">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
                              <a href="{%  url 'ECO:index' %}">首页</a>
                         </li>
                         <li class="active">
@@ -65,15 +65,16 @@
         </div>
     </div>
     <div class="row clearfix">
-        {% if all_disease %}
-            <ul>
-             {% for disease in all_disease %}
-                <li><a href="{% url 'ECO:disease_detail' disease.id %}">{{ disease.disease_name }}</a></li>
-             {% endfor %}
-            </ul>
-        {% else %}
-            <p>No disease are available.</p>
-        {% endif %}
+        <div class="col-md-3 column">
+            {% block list %}
+
+            {% endblock %}
+        </div>
+        <div class="col-md-9 column">
+            {% block content %}
+
+            {% endblock %}
+        </div>
     </div>
 </div>
 </body>
