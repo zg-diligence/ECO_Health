@@ -11,6 +11,10 @@ import json
 from .method import *
 from .models import *
 
+"""
+  自定义404页面
+"""
+
 @csrf_exempt
 def page_not_found(request):
     return render_to_response('404.html')
@@ -19,18 +23,22 @@ def page_not_found(request):
 def page_error(request):
     return render_to_response('500.html')
 
+"""
+  未登录与登录主页
+"""
+
 @csrf_exempt
 def index(request):
-    user = request.user
-    if str(user) == 'AnonymousUser':
-        return render(request, "ECO/index.html")
-    else:
-        return HttpResponseRedirect(reverse('ECO:home'))
+    return render(request, "ECO/index.html")
 
 @csrf_exempt
 @login_required
 def home(request):
     return render(request, "ECO/home.html")
+
+"""
+  登录、注册、注销
+"""
 
 @csrf_exempt
 def user_login(request):
@@ -91,29 +99,55 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('ECO:index'))
 
-@csrf_exempt
-def disease_index(request):
-    all_disease = Disease.objects.all()
-    context = {'all_disease':all_disease}
-    return render(request,'ECO/disease_index.html',context)
+
+"""
+  症状页面
+"""
 
 @csrf_exempt
 def symptom_index(request):
     pass
 
 @csrf_exempt
-def treatment_index(request):
-    all_treatment = Treatment.objects.all()
-    context = {'all_treatment':all_treatment}
-    return render(request,'ECO/treatment_index.html',context)
+def symptom_detail(request):
+    pass
+
+
+"""
+  个人页面
+"""
 
 @csrf_exempt
 def person_index(request):
     pass
 
 @csrf_exempt
+def person_detail(request):
+    pass
+
+
+"""
+  社交页面
+"""
+
+@csrf_exempt
 def social_index(request):
     pass
+
+@csrf_exempt
+def social_detail(request):
+    pass
+
+
+"""
+疾病页面
+"""
+
+@csrf_exempt
+def disease_index(request):
+    all_disease = Disease.objects.all()
+    context = {'all_disease':all_disease}
+    return render(request,'ECO/disease_index.html',context)
 
 @csrf_exempt
 def disease_detail(request,disease_id):
@@ -135,6 +169,17 @@ def disease_detail(request,disease_id):
     context['counts'] = counts
     return render(request,'ECO/disease_detail.html', context)
 
+
+"""
+  治疗方式页面
+"""
+
+@csrf_exempt
+def treatment_index(request):
+    all_treatment = Treatment.objects.all()
+    context = {'all_treatment':all_treatment}
+    return render(request,'ECO/treatment_index.html',context)
+
 @csrf_exempt
 def treatment_detail(request,treatment_id):
     the_treatment,target_symptom_and_num,num_side,num_effect,num_cost,num_time,negative_symptoms,counts = load_data_for_treatment_page(treatment_id)
@@ -149,37 +194,3 @@ def treatment_detail(request,treatment_id):
     context['counts'] = counts
 
     return  render(request,'ECO/treatment_detail.html',context)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
