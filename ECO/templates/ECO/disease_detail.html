@@ -23,14 +23,21 @@
     <div class="row clearfix">
                 <div class="col-md-12 column">
                     <h1 class="text-left">
-                        {{disease_name}}
+                        {{disease.disease_name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-plus" style="color: rgb(0, 0, 0);font-size: 18px;">
+                            本月新增病友数：{{ disease.fresh_people}}
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-user" style="color: rgb(0, 0, 0);font-size: 18px;">
+                            平台总病友数：{{ disease.total_people}}
+                        </span>
                     </h1>
                     <h3 class="text-left" id="l1">
                         疾病简介
                     </h3>
                     <blockquote>
                         <p>
-                            {{disease_info}}
+                            {{disease.disease_infor}}
                         </p>
                     </blockquote>
                     <h3 class="text-left" id="l2">

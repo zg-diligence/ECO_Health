@@ -1,10 +1,201 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "ECO/base.html" %}
 
-</body>
-</html>
+{% block list %}
+    <div class="list-group">
+                 <a href="#l1" class="list-group-item active"><h4>症状简介</h4></a>
+               <div class="list-group-item">
+                    <span class="badge">{{ counts.0 }}</span> <a href='#l2'><h4>对应疾病</h4></a>
+                </div>
+               <div class="list-group-item">
+                    <span class="badge">{{ counts.1 }}</span> <a href='#l3'><h4>副作用</h4></a>
+                </div>
+                <div class="list-group-item">
+                    <span class="badge">{{ counts.2 }}</span> <a href='#l4'><h4>评价</h4></a>
+                </div>
+                <div class="list-group-item">
+                    <span class="badge">{{ counts.2 }}</span> <a href='#l5'><h4>使用时长</h4></a>
+                </div>
+                <a class="list-group-item active" href='#l6'><h4>费用支出</h4></a>
+            </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <h1 class="text-left">
+                        {{the_treatment.treatment_name}}
+                    </h1>
+                    <h3 class="text-left" id="l1">
+                        治疗方式简介
+                    </h3>
+                    <blockquote>
+                        <p>
+                            {{the_treatment.treatment_info}}
+                        </p>
+                    </blockquote>
+                    <h3 class="text-left" id="l2">
+                        针对症状
+                    </h3>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    症状名称
+                                </th>
+                                <th>
+                                    使用人数
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for s in target_symptom_and_num %}
+                            <tr class="info">
+                                <td>
+                                    <a href="{% url 'ECO:symptom_detail' s.symptom.id %}">
+                                        {{s.symptom.symptom_name}}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a>
+                                        {{s.num}}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <h3 class="text-left" id="l3">
+                        副作用
+                    </h3>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    症状名称
+                                </th>
+                                <th>
+                                    人数
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for s in negative_symptoms %}
+                            <tr class="info">
+                                <td>
+                                    <a href="{% url 'ECO:symptom_detail' s.symptom.id %}">
+                                        {{s.symptom.symptom_name}}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a>
+                                        {{ s.num }}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <h3 class="text-left" id="l4">
+                        评价
+                    </h3>
+                    <div class="row clearfix">
+                        <div class="col-md-6 column">
+                            <h4>
+                                疗效
+                            </h4>
+                        </div>
+                        <div class="col-md-6 column">
+                            <h4>
+                                副作用
+                            </h4>
+                        </div>
+                    </div>
+                    <h3 class="text-left" id="l5">
+                        使用时长
+                    </h3>
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr class='info'>
+                                <td>
+                                    少于一个月
+                                </td>
+                                <td>
+                                    {{num_time.0}}
+                                </td>
+                                </tr>
+                                <tr class='info'>
+                                <td>
+                                    1-6个月
+                                </td>
+                                <td>
+                                    {{num_time.1}}
+                                </td>
+                            </tr>
+                            <tr class='info'>
+                                <td>
+                                    6-12个月
+                                </td>
+                                <td>
+                                    {{num_time.2}}
+                                </td>
+                                </tr>
+                                <tr class='info'>
+                                <td>
+                                    1年以上
+                                </td>
+                                <td>
+                                    {{num_time.3}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3 class="text-left" id="l6">
+                        费用支出
+                    </h3>
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr class='info'>
+                                <td>
+                                    少于100元
+                                </td>
+                                <td>
+                                    {{ num_cost.0 }}
+                                </td>
+                            </tr>
+                            <tr class='info'>
+                                <td>
+                                    100到200元
+                                </td>
+                                <td>
+                                    {{ num_cost.1 }}
+                                </td>
+                            </tr>
+                            <tr class='info'>
+                                <td>
+                                    200到500元
+                                </td>
+                                <td>
+                                    {{ num_cost.2 }}
+                                </td>
+                            </tr>
+                            <tr class='info'>
+                                <td>
+                                    500到1000元
+                                </td>
+                                <td>
+                                    {{ num_cost.3 }}
+                                </td>
+                            </tr>
+                            <tr class='info'>
+                                <td>
+                                    1000元以上
+                                </td>
+                                <td>
+                                    {{ num_cost.4 }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+{% endblock %}

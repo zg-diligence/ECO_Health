@@ -85,16 +85,15 @@ def disease_index(request):
     return render(request,'ECO/disease_index.html',context)
 
 def disease_detail(request,disease_id):
-    disease_name,disease_info, treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women = load_data_for_disease_page(disease_id)
+    the_disease, treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women = load_data_for_disease_page(disease_id)
     context = {'treatments_for_symptoms':treatments_for_symptoms,'treatments_for_disease':treatments_for_disease}
     context['evaluations'] = evaluations
     context['ages'] = ages
     context['diagnosed'] = diagnosed
     context['undiagnosed'] = undiagnosed
-    context['disease_info'] = disease_info
     context['num_men'] = num_men
     context['num_women'] = num_women
-    context['disease_name'] = disease_name
+    context['disease'] = the_disease
 
     counts = []
     counts.append(len(treatments_for_symptoms))

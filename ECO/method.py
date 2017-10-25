@@ -3,8 +3,6 @@ from .models import Symptom, Treatment, Disease, UserInfo, Evaluation, Daily
 #by disease's name , get the related symptoms and treatments
 def load_data_for_disease_page(disease_id):
     the_disease = Disease.objects.get(id=disease_id)
-    disease_info = the_disease.disease_infor
-    disease_name = the_disease.disease_name
     symptoms = the_disease.symptom_set.all()
     #treatment for symptom which this disease has
     #treatments_for_symptoms = [ {'treatments':[],'symptom':symptom},  ...]
@@ -115,7 +113,7 @@ def load_data_for_disease_page(disease_id):
                         temp['symptom'].append(negative_symptom)
                 evaluations.append(temp)
 
-    return disease_name,disease_info,treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women
+    return the_disease,treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women
 
 def load_data_for_treatment_page(treatment_id):
     the_treatment = Treatment.objects.get(id=treatment_id)
