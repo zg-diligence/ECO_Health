@@ -65,12 +65,6 @@ def home(request):
     print(user.username, user.email)
     return render(request, "ECO/home.html")
 
-def person_index(request):
-    pass
-
-def social_index(request):
-    pass
-
 def symptom_index(request):
     all_symptom = Symptom.objects.all()
     context = {'all_symptom':all_symptom}
@@ -129,7 +123,32 @@ def treatment_detail(request,treatment_id):
 
     return  render(request,'ECO/treatment_detail.html',context)
 
+def person_index(request):
+    if not request.user.is_authenticated():
+        return render(request,'ECO/index.html')
+    user = request.user
+    whole_user = user.userinfo_set.all()[0]
+    disease = whole_user.diseases.get()
+    print(disease)
+    return render(request,'ECO/index.html')
 
+def person_disease(request):
+    pass
+
+def person_symptom(request):
+    pass
+
+def person_treatment(request):
+    pass
+
+def person_info(request):
+    pass
+
+def person_update(request):
+    pass
+
+def social_index(request):
+    pass
 
 
 

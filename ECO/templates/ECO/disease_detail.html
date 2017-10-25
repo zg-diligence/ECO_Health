@@ -64,7 +64,7 @@
                                 </td>
                                 <td>
                                     {% for t in ts.treatments %}
-                                        <a>
+                                        <a href="{% url 'ECO:treatment_detail' t.id %}">
                                             {{t.treatment_name}}
                                         </a>
                                     {% endfor %}
