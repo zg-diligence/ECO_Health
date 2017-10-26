@@ -3,16 +3,19 @@
 {% block list %}
     <div class="list-group">
         <a href="{% url 'ECO:person_disease' %}" class="list-group-item active"><h4>疾病概况</h4></a>
-    <div class="list-group-item">
-        <span class="badge">{{ counts.0 }}</span> <a href='{% url 'ECO:person_symptom' %}'><h4>常见症状</h4></a>
-    </div>
-    <div class="list-group-item">
-        <span class="badge">{{ counts.1 }}</span> <a href='{% url 'ECO:person_treatment' %}'><h4>治疗手段</h4></a>
-    </div>
-    <div class="list-group-item">
-        <a href='{% url 'ECO:person_info' %}'><h4>基础信息</h4></a>
-    </div>
-        <a class="list-group-item active" href='{%  url 'ECO:person_update' %}'><h4>每日更新</h4></a>
+        <div class="list-group-item">
+            <span class="badge">{{ counts.0 }}</span> <a href='{% url 'ECO:person_symptom' %}'><h4>常见症状</h4></a>
+        </div>
+        <div class="list-group-item">
+            <span class="badge">{{ counts.1 }}</span> <a href='{% url 'ECO:person_treatment' %}'><h4>治疗手段</h4></a>
+        </div>
+        <div class="list-group-item">
+            <a href='{% url 'ECO:person_info' %}'><h4>基础信息</h4></a>
+        </div>
+        <div class="list-group-item">
+            <a href='{% url 'ECO:person_update' %}'><h4>每日更新</h4></a>
+        </div>
+        <a class="list-group-item active" href='{%  url 'ECO:person_diagram' %}'><h4>图表分析</h4></a>
     </div>
 {% endblock %}
 

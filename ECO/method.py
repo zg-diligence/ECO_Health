@@ -44,7 +44,7 @@ def load_data_for_disease_page(disease_id):
 
 
     #count the age  diagnosed  sex evaluations
-    #evaluations = [  {'treatment':treatment ,'num':20, 'score':42, 'symptom':[...]}, .....]
+    #evaluations = [  {'treatment':treatment ,'num':20, 'score':[22,44,56,44], 'symptom':[...]}, .....]
     evaluations = []
     ages = [0,0,0,0,0,0]
     diagnosed = 0
@@ -88,8 +88,17 @@ def load_data_for_disease_page(disease_id):
 
             if flag:
                 evaluations[index]['num'] += 1
-                evaluations[index]['score'] = (evaluations[treatment_name]['score'] + int(evaluation.positive_score))
-                evaluations[index]['score'] /= evaluations[treatment_name]['num']
+
+
+                if evaluation.positive_score <= 25:
+                    evaluations[index]['score'][0] += 1
+                elif evaluation.positive_score <= 50:
+                    evaluations[index]['score'][1] += 1
+                elif evaluation.positive_score <= 75:
+                    evaluations[index]['score'][2] += 1
+                else:
+                    evaluations[index]['score'][3] += 1
+
                 negative_symptoms = evaluation.negative_symptoms.all()
                 for negative_symptom in negative_symptoms:
                     if negative_symptom in evaluations[index]['symptom']:
@@ -102,7 +111,7 @@ def load_data_for_disease_page(disease_id):
                 temp = {}
                 temp['treatment'] = evaluation.treatment
                 temp['num'] = 1
-                temp['score'] = int(evaluation.positive_score)
+                temp['score'] = [0,0,0,0]
                 temp['symptom'] = []
                 negative_symptoms = evaluation.negative_symptoms.all()
                 for negative_symptom in negative_symptoms:
@@ -111,6 +120,16 @@ def load_data_for_disease_page(disease_id):
 
                     else:
                         temp['symptom'].append(negative_symptom)
+
+                if evaluation.positive_score <= 25:
+                    temp['score'][0] += 1
+                elif evaluation.positive_score <= 50:
+                    temp['score'][1] += 1
+                elif evaluation.positive_score <= 75:
+                    temp['score'][2] += 1
+                else:
+                    temp['score'][3] += 1
+
                 evaluations.append(temp)
 
     return the_disease,treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women
