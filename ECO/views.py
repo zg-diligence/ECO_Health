@@ -167,20 +167,71 @@ def person_disease(request):
     except IndexError:
         return render_to_response('404.html')
     else:
-        disease = whole_user.diseases.all[1]
+        disease_id = whole_user.diseases.all()[0].id
         context = {}
-        context['disease'] = disease
-        return  render(request,'ECO/person_disease.html',context)
+        the_disease, treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women = load_data_for_disease_page(disease_id)
+        context = {'treatments_for_symptoms':treatments_for_symptoms,'treatments_for_disease':treatments_for_disease}
+        context['evaluations'] = evaluations
+        context['ages'] = ages
+        context['diagnosed'] = diagnosed
+        context['undiagnosed'] = undiagnosed
+        context['num_men'] = num_men
+        context['num_women'] = num_women
+        context['disease'] = the_disease
+
+        return render(request,'ECO/person_disease.html',context)
 
 
 
 @csrf_exempt
 def person_symptom(request):
-    pass
+    if not request.user.is_authenticated():
+        return render(request,'ECO/index.html')
+    user = request.user
+    try:
+        whole_user = user.userinfo_set.all()[0]
+    except IndexError:
+        return render_to_response('404.html')
+    else:
+        disease_id = whole_user.diseases.all()[0].id
+        context = {}
+        the_disease, treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women = load_data_for_disease_page(disease_id)
+        context = {'treatments_for_symptoms':treatments_for_symptoms,'treatments_for_disease':treatments_for_disease}
+        context['evaluations'] = evaluations
+        context['ages'] = ages
+        context['diagnosed'] = diagnosed
+        context['undiagnosed'] = undiagnosed
+        context['num_men'] = num_men
+        context['num_women'] = num_women
+        context['disease'] = the_disease
+
+        return render(request,'ECO/person_symptom.html',context)
+
 
 @csrf_exempt
 def person_treatment(request):
-    pass
+    if not request.user.is_authenticated():
+        return render(request,'ECO/index.html')
+    user = request.user
+    try:
+        whole_user = user.userinfo_set.all()[0]
+    except IndexError:
+        return render_to_response('404.html')
+    else:
+        disease_id = whole_user.diseases.all()[0].id
+        context = {}
+        the_disease, treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women = load_data_for_disease_page(disease_id)
+        context = {'treatments_for_symptoms':treatments_for_symptoms,'treatments_for_disease':treatments_for_disease}
+        context['evaluations'] = evaluations
+        context['ages'] = ages
+        context['diagnosed'] = diagnosed
+        context['undiagnosed'] = undiagnosed
+        context['num_men'] = num_men
+        context['num_women'] = num_women
+        context['disease'] = the_disease
+
+        return render(request,'ECO/person_treatment.html',context)
+
 
 @csrf_exempt
 def person_info(request):

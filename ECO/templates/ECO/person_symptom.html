@@ -1,0 +1,44 @@
+{% extends 'ECO/person_base.html' %}
+
+{% block main %}
+    <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <h1 class="text-left">
+                        {{disease.disease_name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                    </h1>
+                    <h3 class="text-left" id="l2">
+                        常见症状
+                    </h3>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    症状名称
+                                </th>
+                                <th>
+                                    治疗手段
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ts in treatments_for_symptoms %}
+                            <tr class="info">
+                                <td>
+                                    <a href="{% url 'ECO:symptom_detail' ts.symptom.id %}">
+                                        {{ts.symptom.symptom_name}}
+                                    </a>
+                                </td>
+                                <td>
+                                    {% for t in ts.treatments %}
+                                        <a href="{% url 'ECO:treatment_detail' t.id %}">
+                                            {{t.treatment_name}}
+                                        </a>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+{% endblock %}
