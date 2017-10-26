@@ -155,7 +155,20 @@ def person_index(request):
     except IndexError:
         return render_to_response('404.html')
     else:
-        return render(request,'ECO/person_index.html')
+        disease_id = whole_user.diseases.all()[0].id
+        context = {}
+        the_disease, treatments_for_symptoms,treatments_for_disease,evaluations,ages,diagnosed,undiagnosed,num_men,num_women = load_data_for_disease_page(disease_id)
+        context = {'treatments_for_symptoms':treatments_for_symptoms,'treatments_for_disease':treatments_for_disease}
+        context['evaluations'] = evaluations
+        context['ages'] = ages
+        context['diagnosed'] = diagnosed
+        context['undiagnosed'] = undiagnosed
+        context['num_men'] = num_men
+        context['num_women'] = num_women
+        context['disease'] = the_disease
+
+        return render(request,'ECO/person_disease.html',context)
+
 
 @csrf_exempt
 def person_disease(request):
@@ -247,6 +260,22 @@ def person_diagram(request):
 
 @csrf_exempt
 def social_index(request):
+    return render(request,'ECO/social_index.html')
+
+@csrf_exempt
+def social_friendstate(request):
+    pass
+
+@csrf_exempt
+def social_sendstate(request):
+    pass
+
+@csrf_exempt
+def social_newfriend(request):
+    pass
+
+@csrf_exempt
+def social_heart(request):
     pass
 
 
