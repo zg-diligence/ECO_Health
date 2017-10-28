@@ -41,7 +41,7 @@ class Evaluation(models.Model):
         return str(self.id)
 
 class UserInfo(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     #require the dimension of image
     image = models.ImageField(height_field=50,width_field=50,blank=True)
     choice_index = (('F','女'),('M','男'))

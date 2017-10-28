@@ -4,6 +4,9 @@
     <div class="list-group">
         <a href="{% url 'ECO:social_friendstate' %}" class="list-group-item active"><h4>好友动态</h4></a>
         <div class="list-group-item">
+            <span class="badge">{{ counts.0 }}</span> <a href='{% url 'ECO:social_friendlist' %}'><h4>好友列表</h4></a>
+        </div>
+        <div class="list-group-item">
             <span class="badge">{{ counts.0 }}</span> <a href='{% url 'ECO:social_sendstate' %}'><h4>发表动态</h4></a>
         </div>
         <div class="list-group-item">
@@ -17,4 +20,9 @@
     {% block main %}
 
     {% endblock %}
+    <script>
+    $(document).ready(function(){
+        $('#social').addClass('active');
+    });
+    </script>
 {% endblock %}

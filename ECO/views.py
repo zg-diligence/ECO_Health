@@ -151,7 +151,7 @@ def person_index(request):
         return render(request,'ECO/index.html')
     user = request.user
     try:
-        whole_user = user.userinfo_set.all()[0]
+        whole_user = user.userinfo
     except IndexError:
         return render_to_response('404.html')
     else:
@@ -176,7 +176,7 @@ def person_disease(request):
         return render(request,'ECO/index.html')
     user = request.user
     try:
-        whole_user = user.userinfo_set.all()[0]
+        whole_user = user.userinfo
     except IndexError:
         return render_to_response('404.html')
     else:
@@ -202,7 +202,7 @@ def person_symptom(request):
         return render(request,'ECO/index.html')
     user = request.user
     try:
-        whole_user = user.userinfo_set.all()[0]
+        whole_user = user.userinfo
     except IndexError:
         return render_to_response('404.html')
     else:
@@ -227,7 +227,7 @@ def person_treatment(request):
         return render(request,'ECO/index.html')
     user = request.user
     try:
-        whole_user = user.userinfo_set.all()[0]
+        whole_user = user.userinfo
     except IndexError:
         return render_to_response('404.html')
     else:
@@ -264,6 +264,10 @@ def social_index(request):
 
 @csrf_exempt
 def social_friendstate(request):
+    pass
+
+@csrf_exempt
+def social_friendlist(request):
     pass
 
 @csrf_exempt

@@ -29,6 +29,7 @@ person_pattern = [
 social_pattern = [
     url(r'^$', social_index, name='social_index'),
     url(r'social_friendstate/$',social_friendstate,name='social_friendstate'),
+    url(r'social_friendlist/$',social_friendlist,name='social_friendlist'),
     url(r'social_sendstate/$',social_sendstate,name='social_sendstate'),
     url(r'social_newfriend/$',social_newfriend,name='social_newfriend'),
     url(r'social_heart/$',social_heart,name='social_heart'),
