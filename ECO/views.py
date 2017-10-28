@@ -155,6 +155,24 @@ def person_index(request):
 
 @csrf_exempt
 @login_required
+def person_disease(request):
+    """person_disease同"""
+    user = request.user
+    try:
+        whole_user = user.userinfo
+        disease_id = whole_user.diseases.all()[0].id
+    except IndexError:
+        return render_to_response('404.html')
+    else:
+        keys = ['disease', 'treatments_for_symptoms', 'treatments_for_disease',
+                'evaluations', 'ages', 'diagnosed', 'undiagnosed', 'num_men', 'num_women']
+        values = load_data_for_disease_page(disease_id)
+        context = dict(zip(keys, values))
+        return render(request, 'ECO/person_disease.html', context)
+
+
+@csrf_exempt
+@login_required
 def person_symptom(request):
     user = request.user
     try:
