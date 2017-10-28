@@ -71,6 +71,26 @@ class Daily(models.Model):
     def __str__(self):
         return self.id
 
+class Message(models.Model):
+    user = models.ForeignKey(User)
+    content = models.TextField()
+    like = models.IntegerField(default=0)
+    post_time = models.DateTimeField(auto_now_add=True)
+
+class Comment(models.Model):
+    user = models.ForeignKey(User)
+    content = models.CharField(max_length=200)
+    message = models.ForeignKey(Message)
+    post_time = models.DateTimeField(auto_now_add=True)
+
+class Relation(models.Model):
+    user1 = models.ForeignKey(User,related_name='user1')
+    user2 = models.ForeignKey(User,related_name='user2')
+
+
+
+
+
 
 
 

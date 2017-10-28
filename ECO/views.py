@@ -264,11 +264,42 @@ def social_index(request):
 
 @csrf_exempt
 def social_friendstate(request):
-    pass
+    user = request.user
+    userinfo = user.userinfo
+    follows = userinfo.you_follow.all()
+
+    message = []
+
+    for f in follows:
+        temp = f.message_set.all()
+        message.append(temp)
+
+    context = {'message':message}
+
+    return render(request,'ECO/social_friendstate.html',context)
 
 @csrf_exempt
 def social_friendlist(request):
-    pass
+    user = request.user
+    follow_you_relation = user.user2.all()
+    you_follow_relation = user.user1.all()
+
+    you_follow = []
+    follow_you = []
+
+    for r in follow_you_relation:
+        follow_you.append(r.user1)
+
+    for r in you_follow_relation:
+        you_follow.append(r.user2)
+
+    context = {}
+    context['you_follow'] = you_follow
+    context['follow_you'] = follow_you
+
+    print(you_follow)
+
+    return render(request,'ECO/social_friendlist.html',context)
 
 @csrf_exempt
 def social_sendstate(request):
