@@ -4,7 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'lxfczr*0p0c9=@^11i$t_vtt)+b9ok^eitfi1$t)zfsc_kbge-'
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*']  # 设置允许访问的域名, *通配所有域名
 
 INSTALLED_APPS = [
@@ -52,7 +52,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'eco',
         'USER': 'root',
-        'PASSWORD': '0526',
+        'PASSWORD': '5426030',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -82,7 +82,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 LOGIN_URL = '/ECO/'
 

@@ -1,5 +1,24 @@
 {% extends 'ECO/social_base.html' %}
 
 {% block main %}
-
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+			<form role="form">
+				<div class="form-group">
+					 <h3><label for="exampleInputEmail1">内容</label></h3>
+                     <textarea class="form-control" style="height: 300px;"> </textarea>
+				</div>
+				<div class="form-group">
+					 <label for="exampleInputFile">图片</label><input type="file" id="exampleInputFile" />
+				</div>
+				<div class="checkbox">
+					 <label><input type="checkbox" />私密</label>
+				</div>
+                <div class="checkbox">
+					 <label><input type="checkbox" />公开</label>
+				</div>
+                <button type="submit" class="btn btn-info">发布</button>
+			</form>
+		</div>
+	</div>
 {% endblock %}

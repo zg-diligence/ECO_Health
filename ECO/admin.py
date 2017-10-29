@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
-from .models import Symptom, Treatment, Disease, \
-    UserInfo, Evaluation, Daily, Relation
+from .models import *
 
 
 class UserInfoInline(admin.StackedInline):
@@ -44,6 +43,11 @@ class DailyAdmin(admin.ModelAdmin):
 class RelationAdmin(admin.ModelAdmin):
     pass
 
+class CommentInline(admin.StackedInline):
+    model = Comment
+
+class MessageAdmin(admin.ModelAdmin):
+    inlines = (CommentInline,)
 
 admin.site.unregister(User)
 admin.site.register(User, MyUserAdmin)
@@ -55,3 +59,4 @@ admin.site.register(Disease, DiseaseAdmin)
 admin.site.register(Evaluation, EvaluationAdmin)
 admin.site.register(Daily, DailyAdmin)
 admin.site.register(Relation, RelationAdmin)
+admin.site.register(Message,MessageAdmin)

@@ -235,24 +235,50 @@ def social_index(request):
 @login_required
 def social_friendstate(request):
     user = request.user
-    userinfo = user.userinfo
-    follows = userinfo.you_follow.all()
-    message = [f.message_set.all() for f in follows]
-    context = {'message': message}
-    return render(request, 'ECO/social_friendstate.html', context)
+
+    you_follow_relation = user.user1.all()
+    message_list = []
+    for f in you_follow_relation:
+        follow_user = f.user2
+        temps = follow_user.message_set.all()
+        if follow_user.userinfo.image.name !='':
+            index = follow_user.userinfo.image.name.find('/media')
+            img_path = follow_user.userinfo.image.name[index:]
+        if len(temps) != 0:
+            for temp in temps:
+                message_list.append([follow_user,img_path,temp.content,temp.like,temp.post_time.strftime("%Y-%m-%d %H:%M:%S")])
+
+    message_list = sorted(message_list,key= lambda m:m[4],reverse=True)
+
+    print(message_list)
+
+    return render(request,'ECO/social_friendstate.html',{'message_list':message_list})
 
 
 @csrf_exempt
 @login_required
 def social_friendlist(request):
     user = request.user
-    print(user.username)
+
     follow_you_relation = user.user2.all()
     you_follow_relation = user.user1.all()
 
-    you_follow = [r.user2.userinfo for r in you_follow_relation]
-    follow_you = [r.user1.userinfo for r in follow_you_relation]
-    print(you_follow)
+    index = 1000
+    flag = True
+    for f in you_follow_relation:
+        if f.user2.userinfo.image.name != '':
+            index = f.user2.userinfo.image.name.find('/media')
+            flag = False
+            break
+    if flag:
+        for f in follow_you_relation:
+            if f.user1.userinfo.image.name != '':
+                index = f.user1.userinfo.image.name.find('/media')
+                break
+
+    you_follow = [[r.user2.userinfo,r.user2.userinfo.image.name[index:],r.user2.userinfo.age,r.user2.userinfo.diseases.all()[0]] for r in you_follow_relation]
+    follow_you = [[r.user1.userinfo,r.user1.userinfo.image.name[index:],r.user1.userinfo.age,r.user1.userinfo.diseases.all()[0]]for r in follow_you_relation]
+
     context = {'you_follow': you_follow, 'follow_you': follow_you}
     return render(request, 'ECO/social_friendlist.html', context)
 
@@ -260,7 +286,7 @@ def social_friendlist(request):
 @csrf_exempt
 @login_required
 def social_sendstate(request):
-    pass
+    return render(request,'ECO/social_sendstate.html')
 
 
 @csrf_exempt

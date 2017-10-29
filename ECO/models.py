@@ -47,7 +47,7 @@ class Evaluation(models.Model):
     negative_symptoms = models.ManyToManyField(Symptom)
 
     def __str__(self):
-        return str(str(self.id) + ' ' + self.treatment.treatment_name)
+        return str(str(self.id) + ' ' + self.treatment.treatment_name) + '价格：' + str(self.cost)
 
 
 class UserInfo(models.Model):
@@ -55,7 +55,7 @@ class UserInfo(models.Model):
 
     fs = FileSystemStorage(location='/media/head')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(blank=True, upload_to=BASE_DIR + '\media\head')
+    image = models.ImageField(blank=True, upload_to='head')
     choice_index = (('F', '女'), ('M', '男'))
     sex = models.CharField(max_length=10, default="M", choices=choice_index)
     age = models.IntegerField()
@@ -91,12 +91,18 @@ class Message(models.Model):
     like = models.IntegerField(default=0)
     post_time = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.user.username + self.content[:5] + '...'
+
 
 class Comment(models.Model):
     user = models.ForeignKey(User)
     content = models.CharField(max_length=200)
     message = models.ForeignKey(Message)
     post_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['post_time']
 
 
 class Relation(models.Model):
