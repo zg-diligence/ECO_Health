@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+import os
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class Disease(models.Model):
     disease_name = models.CharField(max_length=30)
@@ -50,7 +52,7 @@ class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # require the dimension of image
     nickname = models.CharField(max_length=15,default=' ')
-    image = models.ImageField(height_field=50, width_field=50, blank=True)
+    image = models.ImageField(blank=True,upload_to=BASE_DIR + '/media/head')
     choice_index = (('F', '女'), ('M', '男'))
     sex = models.CharField(max_length=10, default="M", choices=choice_index)
     age = models.IntegerField()

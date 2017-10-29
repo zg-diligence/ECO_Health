@@ -244,11 +244,13 @@ def social_friendstate(request):
 @login_required
 def social_friendlist(request):
     user = request.user
+    print(user.username)
     follow_you_relation = user.user2.all()
     you_follow_relation = user.user1.all()
 
-    you_follow = [r.user1.userinfo for r in follow_you_relation]
-    follow_you = [r.user2.userinfo for r in you_follow_relation]
+    you_follow = [r.user2.userinfo for r in you_follow_relation]
+    follow_you = [r.user1.userinfo for r in follow_you_relation]
+    print(you_follow)
     context = {'you_follow': you_follow, 'follow_you': follow_you}
     return render(request, 'ECO/social_friendlist.html', context)
 

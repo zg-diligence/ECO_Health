@@ -90,9 +90,10 @@ LOGIN_URL = '/ECO/'
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR,'collected_static')  #用于收集部署
 STATICFILES_DIRS = [
+    #定义不属于任何一个应用的静态文件的位置（这里是项目目录下的static文件夹）
     os.path.join(BASE_DIR, "static"),
 ]
 
 # 用户上传的文件
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
