@@ -117,7 +117,6 @@ def load_data_for_disease_page(disease_id):
                 for negative_symptom in negative_symptoms:
                     if negative_symptom in temp['symptom']:
                         continue
-
                     else:
                         temp['symptom'].append(negative_symptom)
 
