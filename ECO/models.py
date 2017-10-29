@@ -33,6 +33,7 @@ class Treatment(models.Model):
 
 
 class Evaluation(models.Model):
+    disease = models.ForeignKey(Disease,null=True)
     treatment = models.ForeignKey(Treatment)
     cost = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     choices = (('1', '少于1个月'), ('2', '1-6个月'), ('3', '6-12个月'), ('4', '1年以上'))
