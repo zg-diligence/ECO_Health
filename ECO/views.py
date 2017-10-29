@@ -22,6 +22,8 @@ def page_error(request):
 
 @csrf_exempt
 def index(request):
+    # uesr = User.objects.get(username='li')
+    # print(uesr.userinfo.image.name)
     return render(request, "ECO/index.html")
 
 
