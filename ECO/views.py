@@ -247,8 +247,8 @@ def social_friendlist(request):
     follow_you_relation = user.user2.all()
     you_follow_relation = user.user1.all()
 
-    you_follow = [r.user1 for r in follow_you_relation]
-    follow_you = [r.user2 for r in you_follow_relation]
+    you_follow = [r.user1.userinfo for r in follow_you_relation]
+    follow_you = [r.user2.userinfo for r in you_follow_relation]
     context = {'you_follow': you_follow, 'follow_you': follow_you}
     return render(request, 'ECO/social_friendlist.html', context)
 

@@ -49,6 +49,7 @@ class Evaluation(models.Model):
 class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # require the dimension of image
+    nickname = models.CharField(max_length=15,default=' ')
     image = models.ImageField(height_field=50, width_field=50, blank=True)
     choice_index = (('F', '女'), ('M', '男'))
     sex = models.CharField(max_length=10, default="M", choices=choice_index)
