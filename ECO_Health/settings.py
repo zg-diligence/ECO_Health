@@ -4,7 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'lxfczr*0p0c9=@^11i$t_vtt)+b9ok^eitfi1$t)zfsc_kbge-'
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']  # 设置允许访问的域名, *通配所有域名
 
 INSTALLED_APPS = [
@@ -52,7 +52,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'eco',
         'USER': 'root',
-        'PASSWORD': '5426030',
+        'PASSWORD': '0526',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -94,5 +94,5 @@ STATICFILES_DIRS = [
 ]
 
 # 用户上传的文件
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')

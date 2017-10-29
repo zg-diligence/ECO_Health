@@ -1,5 +1,7 @@
+import os
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 
 
 class Disease(models.Model):
@@ -33,7 +35,7 @@ class Treatment(models.Model):
 
 
 class Evaluation(models.Model):
-    disease = models.ForeignKey(Disease,null=True)
+    disease = models.ForeignKey(Disease, null=True)
     treatment = models.ForeignKey(Treatment)
     cost = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     choices = (('1', '少于1个月'), ('2', '1-6个月'), ('3', '6-12个月'), ('4', '1年以上'))
@@ -47,10 +49,11 @@ class Evaluation(models.Model):
 
 
 class UserInfo(models.Model):
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    fs = FileSystemStorage(location='/media/head')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # require the dimension of image
-    nickname = models.CharField(max_length=15,default=' ')
-    image = models.ImageField(height_field=50, width_field=50, blank=True)
+    image = models.ImageField(blank=True, upload_to=BASE_DIR + '\media\head')
     choice_index = (('F', '女'), ('M', '男'))
     sex = models.CharField(max_length=10, default="M", choices=choice_index)
     age = models.IntegerField()
