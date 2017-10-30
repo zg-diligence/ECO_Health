@@ -241,9 +241,12 @@ def social_friendstate(request):
     for f in you_follow_relation:
         follow_user = f.user2
         temps = follow_user.message_set.all()
-        if follow_user.userinfo.image.name !='':
+        img_path = follow_user.userinfo.image.name
+
+        if img_path !='':
             index = follow_user.userinfo.image.name.find('/media')
             img_path = follow_user.userinfo.image.name[index:]
+
         if len(temps) != 0:
             for temp in temps:
                 message_list.append([follow_user,img_path,temp.content,temp.like,temp.post_time.strftime("%Y-%m-%d %H:%M:%S")])
@@ -292,7 +295,61 @@ def social_sendstate(request):
 @csrf_exempt
 @login_required
 def social_newfriend(request):
-    pass
+    user = request.user
+    username = user.username
+
+    disease = user.userinfo.diseases.all()[0]
+    symptoms = user.userinfo.symptoms.all()
+    treatments = user.userinfo.treatments.all()
+
+    people_by_disease = []
+    for p in disease.userinfo_set.all():
+        if p.user.username != username:
+            img_path = p.image.name
+            if p.image.name !='':
+                index = p.image.name.find('/media')
+                img_path = p.image.name[index:]
+            age = p.age
+            name = p.user.username
+            disease_name = disease.disease_name
+            temp = [img_path,name,age,disease_name]
+            people_by_disease.append(temp)
+
+    people_by_symptom = []
+    for s in symptoms:
+        peoples = s.userinfo_set.all()
+        for p in peoples:
+            if p.user.username != username:
+                img_path = p.image.name
+                if p.image.name !='':
+                    index = p.image.name.find('/media')
+                    img_path = p.image.name[index:]
+                age = p.age
+                name = p.user.username
+                symptom_name = s.symptom_name
+                temp = [img_path,name,age,symptom_name]
+                people_by_symptom.append(temp)
+
+    people_by_treatment = []
+    for t in treatments:
+        peoples = t.userinfo_set.all()
+        for p in peoples:
+            if p.user.username != username:
+                img_path = p.image.name
+                if p.image.name !='':
+                    index = p.image.name.find('/media')
+                    img_path = p.image.name[index:]
+                age = p.age
+                name = p.user.username
+                treatment_name = t.treatment_name
+                temp = [img_path,name,age,treatment_name]
+                people_by_treatment.append(temp)
+
+    keys = ['people_by_disease','people_by_symptom','people_by_treatment']
+    values = [people_by_disease,people_by_symptom,people_by_treatment]
+    context = dict(zip(keys,values))
+
+    return  render(request,'ECO/social_newfriend.html',context)
 
 
 @csrf_exempt
