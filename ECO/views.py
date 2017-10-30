@@ -9,7 +9,6 @@ import json
 from .method import *
 from .models import *
 
-
 @csrf_exempt
 def page_not_found(request):
     return render_to_response('404.html')
@@ -101,6 +100,17 @@ def symptom_detail(request, symptom_id):
     keys = ['the_symptom', 'disease_and_num', 'treatment_and_evaluations', 'counts']
     values = load_data_for_symptom_page(symptom_id)
     context = dict(zip(keys, values))
+
+    # calc proportion of different diseases for one symptom
+    total_num = sum([item['num'] for item in context['disease_and_num']])
+    for item in context['disease_and_num']:
+        item['num_rate'] = 100*item['num']/total_num
+
+    # calc proportion of avaluations for each treatment
+    total_num = sum([item['num'] for item in context['treatment_and_evaluations']])
+    for item in context['treatment_and_evaluations']:
+        item['num_rate'] = 100 * item['num'] / total_num
+
     return render(request, 'ECO/symptom_detail.html', context)
 
 
@@ -118,6 +128,8 @@ def disease_detail(request, disease_id):
     values = load_data_for_disease_page(disease_id)
     context = dict(zip(keys, values))
     context['counts'] = [len(context[keys[1]]), len(context[keys[2]]), len(context[keys[3]])]
+    context = calc_disease_proportion(values, context)
+
     return render(request, 'ECO/disease_detail.html', context)
 
 
@@ -134,6 +146,7 @@ def treatment_detail(request, treatment_id):
             'num_effect', 'num_cost', 'num_time', 'negative_symptoms', 'counts']
     values = load_data_for_treatment_page(treatment_id)
     context = dict(zip(keys, values))
+    context = calc_treatment_proportion(values, context)
     return render(request, 'ECO/treatment_detail.html', context)
 
 
@@ -152,6 +165,7 @@ def person_index(request):
                 'evaluations', 'ages', 'diagnosed', 'undiagnosed', 'num_men', 'num_women']
         values = load_data_for_disease_page(disease_id)
         context = dict(zip(keys, values))
+        context = calc_disease_proportion(values, context)
         return render(request, 'ECO/person_disease.html', context)
 
 
@@ -170,6 +184,7 @@ def person_disease(request):
                 'evaluations', 'ages', 'diagnosed', 'undiagnosed', 'num_men', 'num_women']
         values = load_data_for_disease_page(disease_id)
         context = dict(zip(keys, values))
+        context = calc_disease_proportion(values, context)
         return render(request, 'ECO/person_disease.html', context)
 
 
@@ -204,6 +219,7 @@ def person_treatment(request):
                 'evaluations', 'ages', 'diagnosed', 'undiagnosed', 'num_men', 'num_women']
         values = load_data_for_disease_page(disease_id)
         context = dict(zip(keys, values))
+        context = calc_disease_proportion(values, context)
         return render(request, 'ECO/person_treatment.html', context)
 
 

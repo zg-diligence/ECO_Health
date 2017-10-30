@@ -2,143 +2,247 @@
 
 {% block main %}
     <div class="row clearfix">
-                <div class="col-md-12 column">
-                    <h1 class="text-left">
-                        {{disease.disease_name}}&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="glyphicon glyphicon-plus" style="color: rgb(0, 0, 0);font-size: 18px;">
-                            本月新增病友数：{{ disease.fresh_people}}
-                        </span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="glyphicon glyphicon-user" style="color: rgb(0, 0, 0);font-size: 18px;">
-                            平台总病友数：{{ disease.total_people}}
-                        </span>
-                    </h1>
-                    <h3 class="text-left" id="l1">
-                        疾病简介
-                    </h3>
-                    <blockquote>
-                        <p>
-                            {{disease.disease_infor}}
-                        </p>
-                    </blockquote>
-                    <h3 class="text-left" id="l5">
-                        分布
-                    </h3>
-                    <div class="row clearfix">
-                        <div class="col-md-6 column">
-                            <h3 class="text-center">
-                                年龄分布
-                            </h3>
-                            <table class="table table-hover">
+            <div class="col-md-12 column">
+                <h1 class="text-left">
+                    {{disease.disease_name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-plus" style="color: rgb(0, 0, 0);font-size: 18px;">
+                        本月新增病友数：{{ disease.fresh_people}}
+                    </span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-user" style="color: rgb(0, 0, 0);font-size: 18px;">
+                        平台总病友数：{{ disease.total_people}}
+                    </span>
+                </h1>
+                <h3 class="text-left" id="l1">
+                    疾病简介
+                </h3>
+                <blockquote>
+                    <p>
+                        {{disease.disease_infor}}
+                    </p>
+                </blockquote>
+
+                <h3 class="text-left" id="l5">
+                    分布
+                </h3>
+                <div class="row clearfix">
+                    <div class="col-md-6 column">
+                        <h3 class="text-center">
+                            年龄分布
+                        </h3>
+                        <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td>年龄段</td>
+                            <td>人数</td>
+                            <td>比例</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="info">
+                            <td>
+                                &#60;20
+                            </td>
+                            <td>
+                                {{ ages.0 }}
+                            </td>
+                            <td>
+                                <div style="width: 90%">
+                                    <div class="row" style="background-color: whitesmoke">
+                                        <div style="float:left; width: {{ age_rate.0 }}%;background-color: #cac8dd">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="info">
+                            <td>
+                                20s
+                            </td>
+                            <td>
+                                {{ ages.1 }}
+                            </td>
+                            <td>
+                                <div style="width: 90%">
+                                    <div class="row" style="background-color: whitesmoke">
+                                        <div style="float:left; width: {{ age_rate.1 }}%;background-color: #cac8dd">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="info">
+                            <td>
+                                30s
+                            </td>
+                            <td>
+                                {{ ages.2 }}
+                            </td>
+                            <td>
+                                <div style="width: 90%">
+                                    <div class="row" style="background-color: whitesmoke">
+                                        <div style="float:left; width: {{ age_rate.2 }}%;background-color: #cac8dd">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="info">
+                            <td>
+                                40s
+                            </td>
+                            <td>
+                                {{ ages.3 }}
+                            </td>
+                            <td>
+                                <div style="width: 90%">
+                                    <div class="row" style="background-color: whitesmoke">
+                                        <div style="float:left; width: {{ age_rate.3 }}%;background-color: #cac8dd">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="info">
+                            <td>
+                                50s
+                            </td>
+                            <td>
+                                {{ ages.4 }}
+                            </td>
+                             <td>
+                                <div style="width: 90%">
+                                    <div class="row" style="background-color: whitesmoke">
+                                        <div style="float:left; width: {{ age_rate.4 }}%;background-color: #cac8dd">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="info">
+                            <td>
+                                60s
+                            </td>
+                            <td>
+                                {{ ages.5 }}
+                            </td>
+                            <td>
+                                <div style="width: 90%">
+                                    <div class="row" style="background-color: whitesmoke">
+                                        <div style="float:left; width: {{ age_rate.5}}%;background-color: #cac8dd">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                    </div>
+                    <div class="col-md-6 column">
+                        <h3 class="text-center">
+                            男女比例
+                        </h3>
+                        <div class="col-md-offset-1 col-md-4" style="margin-top: 10%">
+                    <svg height="200" width="200" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                         style="overflow: hidden; position: relative;">
+                        {% if  cut_off == "200.0 100.0" %}
+                            {% if direction_1 == '1' %}
+                                <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#d9301d"></circle>
+                            {% else %}
+                                <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#ff9000"></circle>
+                            {% endif %}
+                        {% else %}
+                            <a href="#">
+                                <path fill="#d9301d" stroke="#ffffff"
+                                      d="M100 100L200 100A100 100 0 {{ direction_1 }} 0 {{ cut_off }}Z"
+                                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                            </a>
+                            <a href="#">
+                                <path fill="#ff9000" stroke="#ffffff"
+                                      d="M100 100L{{ cut_off }}A100 100 0 {{ direction_2 }} 0 200 100Z"
+                                      style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                            </a>
+                        {% endif %}
+                    </svg>
+                </div>
+                        <div class="col-md-offset-2 col-md-4" style="margin-top: 10%">
+                            <table class="table table-hover text-center">
+                                <thead>
+                                <tr class="info">
+                                    <td>性别</td>
+                                    <td></td>
+                                    <td>人数</td>
+                                </tr>
+                                </thead>
                                 <tbody>
-                                    <tr class="info">
-                                        <td>
-                                            &#60;20
-                                        </td>
-
-                                        <td>
-                                            {{ages.0}}
-                                        </td>
-                                    </tr>
-                                    <tr class="info">
-                                        <td>
-                                            20s
-                                        </td>
-
-                                        <td>
-                                            {{ages.1}}
-                                        </td>
-                                    </tr>
-                                    <tr class="info">
-                                        <td>
-                                            30s
-                                        </td>
-
-                                        <td>
-                                            {{ages.2}}
-                                        </td>
-                                    </tr>
-                                    <tr class="info">
-                                        <td>
-                                            40s
-                                        </td>
-
-                                        <td>
-                                            {{ages.3}}
-                                        </td>
-                                    </tr>
-                                    <tr class="info">
-                                        <td>
-                                            50s
-                                        </td>
-
-                                        <td>
-                                            {{ages.4}}
-                                        </td>
-                                    </tr>
-                                    <tr class="info">
-                                        <td>
-                                            60s
-                                        </td>
-
-                                        <td>
-                                            {{ages.5}}
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-6 column">
-                            <h3 class="text-center">
-                                男女比例
-                            </h3>
-                            <table class="table table-hover">
-                                <tbody>
-                                    <tr class='info'>
-                                        <td>
-                                            男性
-                                        </td>
-                                        <td>
-                                            {{num_men}}
-                                        </td>
-                                    </tr>
-                                    <tr class='info'>
-                                        <td>
-                                            女性
-                                        </td>
-                                        <td>
-                                            {{num_women}}
-                                        </td>
-                                    </tr>
-
+                                <tr class="info">
+                                    <td>男</td>
+                                    <td>
+                                        <div style="width: 200%;background-color: #d9301d">&nbsp;</div>
+                                    </td>
+                                    <td>{{ num_men }}</td>
+                                </tr>
+                                <tr class="info">
+                                    <td>女</td>
+                                    <td>
+                                        <div style="width: 200%;background-color: #ff9000">&nbsp;</div>
+                                    </td>
+                                    <td>{{ num_women }}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <h3 class="text-left" id="l6">
-                        就诊情况
-                    </h3>
-                    <table class="table table-hover">
-                        <tbody>
-                            <tr class='info'>
-                                <td>
-                                    已就诊
-                                </td>
-                                <td>
-                                    {{diagnosed}}
-                                </td>
-                            </tr>
-                            <tr class='info'>
-                                <td>
-                                    未就诊
-                                </td>
-                                <td>
-                                    {{undiagnosed}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
+
+                <h3 class="text-left" id="l6">
+                    就诊情况
+                </h3>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <td>
+                            是否就诊
+                        </td>
+                        <td>
+                            人数
+                        </td>
+                        <td>
+                            比例
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='info'>
+                            <td>
+                                已就诊
+                            </td>
+                            <td>
+                                {{ diagnosed }}
+                            </td>
+                            <td>
+                                <div style="width: 90%">
+                                    <div class="row" style="background-color: whitesmoke">
+                                        <a href="#" title="{{ diagnosed }}">
+                                            <div style="float:left; width: {{diagnosed_rate}}%;background-color: #cac8dd">&nbsp;</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class='info'>
+                            <td>
+                                未就诊
+                            </td>
+                            <td>
+                                {{ undiagnosed }}
+                            </td>
+                            <td>
+                                <div style="width: 90%">
+                                    <div class="row" style="background-color: whitesmoke">
+                                        <a href="#" title="{{ undiagnosed }}">
+                                            <div style="float:left; width: {{ undiagnosed_rate }}%;background-color: #cac8dd">&nbsp;</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+    </div>
 {% endblock %}

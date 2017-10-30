@@ -2,97 +2,115 @@
 
 {% block main %}
 <div class="row clearfix">
-                <div class="col-md-12 column">
-                    <h1 class="text-left">
-                        {{disease.disease_name}}&nbsp;&nbsp;&nbsp;&nbsp;
-                    </h1>
-                    <h3 class="text-left" id="l3">
-                        治疗手段
-                    </h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    名称
-                                </th>
-                                <th>
-                                    类别
-                                </th>
-                                <th>
-                                    人数
-                                </th>
-                                <th>
-                                    用途
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for t in treatments_for_disease %}
-                            <tr class="info">
-                                <td>
-                                    <a href="{% url 'ECO:treatment_detail' t.treatment.id %}">
-                                        {{ t.treatment.treatment_name }}
-                                    </a>
-                                </td>
-                                <td>
-                                    {{ t.type }}
-                                </td>
-                                <td>
-                                    {{ t.num }}
-                                </td>
-                                <td>
-                                    {{disease_name}}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <h3 class="text-left" id="l4">
-                        治疗手段对比
-                    </h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    名称
-                                </th>
-                                <th>
-                                    疗效综合评分
-                                </th>
-                                <th>
-                                    副作用
-                                </th>
-                                <th>
-                                    评价数目
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for e in evaluations %}
-                            <tr class="info">
-                                <td>
-                                    <a href="{% url 'ECO:treatment_detail' e.treatment.id %}">
-                                        {{e.treatment.treatment_name}}
-                                    </a>
-                                </td>
-                                <td>
-                                    {{e.score}}
-                                </td>
-                                <td>
-                                    {% for s in e.symptom %}
-                                        <a href="{% url 'ECO:symptom_detail' s.id %}">
-                                            {{s.symptom_name}}
-                                        </a>
-                                    {% endfor %}
-                                </td>
-                                <td>
-                                    {{e.num}}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+        <div class="col-md-12 column">
+            <h1 class="text-left">
+                {{disease.disease_name}}&nbsp;&nbsp;&nbsp;&nbsp;
+            </h1>
 
-                </div>
-            </div>
+            <h3 class="text-left" id="l3">
+                治疗手段
+            </h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        类别
+                    </th>
+                    <th>
+                        人数
+                    </th>
+                    <th>
+                        比例
+                    </th>
+                    <th>
+                        用途
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for t in treatments_for_disease %}
+                    <tr class="info">
+                        <td>
+                            <a href="{% url 'ECO:treatment_detail' t.treatment.id %}">
+                                {{ t.treatment.treatment_name }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ t.type }}
+                        </td>
+                        <td>
+                            {{ t.num }}
+                        </td>
+                        <td>
+                            <div class="row" style="width:90%; float:left; background-color: whitesmoke">
+                                <a href="#" title="{{ t.num_rate }}">
+                                    <div style="width: {{ t.num_rate }}%;background-color: #cac8dd">&nbsp;</div>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            {{ disease_name }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <h3 class="text-left" id="l4">
+                治疗手段对比
+            </h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        疗效综合评分
+                    </th>
+                    <th>
+                        副作用
+                    </th>
+                    <th>
+                        评价数目
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for e in evaluations %}
+                    <tr class="info">
+                        <td>
+                            <a href="{% url 'ECO:treatment_detail' e.treatment.id %}">
+                                {{ e.treatment.treatment_name }}
+                            </a>
+                        </td>
+                        <td>
+                            <div style="width:100px">
+                                <div class="row">
+                                    <a href="#" title="极好{{ e.score_rate.0 }}"><div style="float:left; width: {{ e.score_rate.0 }}%;background-color: #d9301d">&nbsp;</div></a>
+                                    <a href="#" title="良好{{ e.score_rate.1 }}"><div style="float:left; width: {{ e.score_rate.1 }}%;background-color: #ff9000">&nbsp;</div></a>
+                                    <a href="#" title="一般{{ e.score_rate.2 }}"><div style="float:left; width: {{ e.score_rate.2 }}%;background-color: #fede31">&nbsp;</div></a>
+                                    <a href="#" title="无效{{ e.score_rate.3 }}"><div style="float:left; width: {{ e.score_rate.3 }}%;background-color: #1ead44">&nbsp;</div></a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            {% for s in e.symptom %}
+                                <a href="{% url 'ECO:symptom_detail' s.id %}">
+                                    {{ s.symptom_name }}
+                                </a>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {{ e.num }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
 {% endblock %}

@@ -2,286 +2,409 @@
 
 {% block list %}
     <div class="list-group">
-                 <a href="#l1" class="list-group-item active"><h4>疾病简介</h4></a>
-               <div class="list-group-item">
-                    <span class="badge">{{ counts.0 }}</span> <a href='#l2'><h4>常见症状</h4></a>
-                </div>
-               <div class="list-group-item">
-                    <span class="badge">{{ counts.1 }}</span> <a href='#l3'><h4>治疗手段</h4></a>
-                </div>
-                <div class="list-group-item">
-                    <span class="badge">{{ counts.2 }}</span> <a href='#l4'><h4>治疗手段对比</h4></a>
-                </div>
-                <div class="list-group-item">
-                     <a href='#l5'><h4>分布</h4></a>
-                </div>
-                <a class="list-group-item active" href='#l6'><h4>就诊情况</h4></a>
-            </div>
+        <a href="#l1" class="list-group-item active"><h4>疾病简介</h4></a>
+        <div class="list-group-item">
+            <span class="badge">{{ counts.0 }}</span> <a href='#l2'><h4>常见症状</h4></a>
+        </div>
+        <div class="list-group-item">
+            <span class="badge">{{ counts.1 }}</span> <a href='#l3'><h4>治疗手段</h4></a>
+        </div>
+        <div class="list-group-item">
+            <span class="badge">{{ counts.2 }}</span> <a href='#l4'><h4>治疗手段对比</h4></a>
+        </div>
+        <div class="list-group-item">
+            <a href='#l5'><h4>分布</h4></a>
+        </div>
+        <a class="list-group-item active" href='#l6'><h4>就诊情况</h4></a>
+    </div>
 {% endblock %}
 
 {% block content %}
     <div class="row clearfix">
-                <div class="col-md-12 column">
-                    <h1 class="text-left">
-                        {{disease.disease_name}}&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="glyphicon glyphicon-plus" style="color: rgb(0, 0, 0);font-size: 18px;">
-                            本月新增病友数：{{ disease.fresh_people}}
+        <div class="col-md-12 column">
+            <h1 class="text-left">
+                {{ disease.disease_name }}&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-plus" style="color: rgb(0, 0, 0);font-size: 18px;">
+                            本月新增病友数：{{ disease.fresh_people }}
                         </span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="glyphicon glyphicon-user" style="color: rgb(0, 0, 0);font-size: 18px;">
-                            平台总病友数：{{ disease.total_people}}
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-user" style="color: rgb(0, 0, 0);font-size: 18px;">
+                            平台总病友数：{{ disease.total_people }}
                         </span>
-                    </h1>
-                    <h3 class="text-left" id="l1">
-                        疾病简介
-                    </h3>
-                    <blockquote>
-                        <p>
-                            {{disease.disease_infor}}
-                        </p>
-                    </blockquote>
-                    <h3 class="text-left" id="l2">
-                        常见症状
-                    </h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    症状名称
-                                </th>
-                                <th>
-                                    治疗手段
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for ts in treatments_for_symptoms %}
-                            <tr class="info">
-                                <td>
-                                    <a href="{% url 'ECO:symptom_detail' ts.symptom.id %}">
-                                        {{ts.symptom.symptom_name}}
-                                    </a>
-                                </td>
-                                <td>
-                                    {% for t in ts.treatments %}
-                                        <a href="{% url 'ECO:treatment_detail' t.id %}">
-                                            {{t.treatment_name}}
-                                        </a>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <h3 class="text-left" id="l3">
+            </h1>
+            <h3 class="text-left" id="l1">
+                疾病简介
+            </h3>
+            <blockquote>
+                <p>
+                    {{ disease.disease_infor }}
+                </p>
+            </blockquote>
+            <h3 class="text-left" id="l2">
+                常见症状
+            </h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        症状名称
+                    </th>
+                    <th>
                         治疗手段
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for ts in treatments_for_symptoms %}
+                    <tr class="info">
+                        <td>
+                            <a href="{% url 'ECO:symptom_detail' ts.symptom.id %}">
+                                {{ ts.symptom.symptom_name }}
+                            </a>
+                        </td>
+                        <td>
+                            {% for t in ts.treatments %}
+                                <a href="{% url 'ECO:treatment_detail' t.id %}">
+                                    {{ t.treatment_name }}
+                                </a>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <h3 class="text-left" id="l3">
+                治疗手段
+            </h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        类别
+                    </th>
+                    <th>
+                        人数
+                    </th>
+                    <th>
+                        比例
+                    </th>
+                    <th>
+                        用途
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for t in treatments_for_disease %}
+                    <tr class="info">
+                        <td>
+                            <a href="{% url 'ECO:treatment_detail' t.treatment.id %}">
+                                {{ t.treatment.treatment_name }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ t.type }}
+                        </td>
+                        <td>
+                            {{ t.num }}
+                        </td>
+                        <td>
+                            <div class="row" style="width:90%; float:left; background-color: whitesmoke">
+                                <a href="#" title="{{ t.num_rate }}">
+                                    <div style="width: {{ t.num_rate }}%;background-color: #cac8dd">&nbsp;</div>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            {{ disease_name }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <h3 class="text-left" id="l4">
+                治疗手段对比
+            </h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        疗效综合评分
+                    </th>
+                    <th>
+                        副作用
+                    </th>
+                    <th>
+                        评价数目
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for e in evaluations %}
+                    <tr class="info">
+                        <td>
+                            <a href="{% url 'ECO:treatment_detail' e.treatment.id %}">
+                                {{ e.treatment.treatment_name }}
+                            </a>
+                        </td>
+                        <td>
+                            <div style="width:100px">
+                                <div class="row">
+                                    <a href="#" title="极好{{ e.score_rate.0 }}"><div style="float:left; width: {{ e.score_rate.0 }}%;background-color: #d9301d">&nbsp;</div></a>
+                                    <a href="#" title="良好{{ e.score_rate.1 }}"><div style="float:left; width: {{ e.score_rate.1 }}%;background-color: #ff9000">&nbsp;</div></a>
+                                    <a href="#" title="一般{{ e.score_rate.2 }}"><div style="float:left; width: {{ e.score_rate.2 }}%;background-color: #fede31">&nbsp;</div></a>
+                                    <a href="#" title="无效{{ e.score_rate.3 }}"><div style="float:left; width: {{ e.score_rate.3 }}%;background-color: #1ead44">&nbsp;</div></a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            {% for s in e.symptom %}
+                                <a href="{% url 'ECO:symptom_detail' s.id %}">
+                                    {{ s.symptom_name }}
+                                </a>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {{ e.num }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <h3 class="text-left" id="l5">
+                分布
+            </h3>
+            <div class="row clearfix">
+                <div class="col-md-5 column">
+                    <h3 class="text-center">
+                        年龄分布
                     </h3>
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>
-                                    名称
-                                </th>
-                                <th>
-                                    类别
-                                </th>
-                                <th>
-                                    人数
-                                </th>
-                                <th>
-                                    用途
-                                </th>
+                                <td>年龄段</td>
+                                <td>人数</td>
+                                <td>比例</td>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for t in treatments_for_disease %}
                             <tr class="info">
                                 <td>
-                                    <a href="{% url 'ECO:treatment_detail' t.treatment.id %}">
-                                        {{ t.treatment.treatment_name }}
-                                    </a>
+                                    &#60;20
                                 </td>
                                 <td>
-                                    {{ t.type }}
+                                    {{ ages.0 }}
                                 </td>
                                 <td>
-                                    {{ t.num }}
-                                </td>
-                                <td>
-                                    {{disease_name}}
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <div style="float:left; width: {{ age_rate.0 }}%;background-color: #cac8dd">&nbsp;</div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <h3 class="text-left" id="l4">
-                        治疗手段对比
-                    </h3>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>
-                                    名称
-                                </th>
-                                <th>
-                                    疗效综合评分
-                                </th>
-                                <th>
-                                    副作用
-                                </th>
-                                <th>
-                                    评价数目
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for e in evaluations %}
                             <tr class="info">
                                 <td>
-                                    <a href="{% url 'ECO:treatment_detail' e.treatment.id %}">
-                                        {{e.treatment.treatment_name}}
-                                    </a>
+                                    20s
                                 </td>
                                 <td>
-                                    {{e.score}}
+                                    {{ ages.1 }}
                                 </td>
                                 <td>
-                                    {% for s in e.symptom %}
-                                        <a href="{% url 'ECO:symptom_detail' s.id %}">
-                                            {{s.symptom_name}}
-                                        </a>
-                                    {% endfor %}
-                                </td>
-                                <td>
-                                    {{e.num}}
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <div style="float:left; width: {{ age_rate.1 }}%;background-color: #cac8dd">&nbsp;</div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <h3 class="text-left" id="l5">
-                        分布
-                    </h3>
-                    <div class="row clearfix">
-                        <div class="col-md-6 column">
-                            <h3 class="text-center">
-                                年龄分布
-                            </h3>
-                            <table class="table table-hover">
-                                <tbody>
-                                    <tr class="info">
-                                        <td>
-                                            &#60;20
-                                        </td>
-
-                                        <td>
-                                            {{ages.0}}
-                                        </td>
-                                    </tr>
-                                    <tr class="info">
-                                        <td>
-                                            20s
-                                        </td>
-
-                                        <td>
-                                            {{ages.1}}
-                                        </td>
-                                    </tr>
-                                    <tr class="info">
-                                        <td>
-                                            30s
-                                        </td>
-
-                                        <td>
-                                            {{ages.2}}
-                                        </td>
-                                    </tr>
-                                    <tr class="info">
-                                        <td>
-                                            40s
-                                        </td>
-
-                                        <td>
-                                            {{ages.3}}
-                                        </td>
-                                    </tr>
-                                    <tr class="info">
-                                        <td>
-                                            50s
-                                        </td>
-
-                                        <td>
-                                            {{ages.4}}
-                                        </td>
-                                    </tr>
-                                    <tr class="info">
-                                        <td>
-                                            60s
-                                        </td>
-
-                                        <td>
-                                            {{ages.5}}
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-6 column">
-                            <h3 class="text-center">
-                                男女比例
-                            </h3>
-                            <table class="table table-hover">
-                                <tbody>
-                                    <tr class='info'>
-                                        <td>
-                                            男性
-                                        </td>
-                                        <td>
-                                            {{num_men}}
-                                        </td>
-                                    </tr>
-                                    <tr class='info'>
-                                        <td>
-                                            女性
-                                        </td>
-                                        <td>
-                                            {{num_women}}
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <h3 class="text-left" id="l6">
-                        就诊情况
-                    </h3>
-                    <table class="table table-hover">
-                        <tbody>
-                            <tr class='info'>
+                            <tr class="info">
                                 <td>
-                                    已就诊
+                                    30s
                                 </td>
                                 <td>
-                                    {{diagnosed}}
+                                    {{ ages.2 }}
+                                </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <div style="float:left; width: {{ age_rate.2 }}%;background-color: #cac8dd">&nbsp;</div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
-                            <tr class='info'>
+                            <tr class="info">
                                 <td>
-                                    未就诊
+                                    40s
                                 </td>
                                 <td>
-                                    {{undiagnosed}}
+                                    {{ ages.3 }}
+                                </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <div style="float:left; width: {{ age_rate.3 }}%;background-color: #cac8dd">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="info">
+                                <td>
+                                    50s
+                                </td>
+                                <td>
+                                    {{ ages.4 }}
+                                </td>
+                                 <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <div style="float:left; width: {{ age_rate.4 }}%;background-color: #cac8dd">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="info">
+                                <td>
+                                    60s
+                                </td>
+                                <td>
+                                    {{ ages.5 }}
+                                </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <div style="float:left; width: {{ age_rate.5}}%;background-color: #cac8dd">&nbsp;</div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <div class="col-md-7 column">
+                    <h3 class="text-center">
+                        男女比例
+                    </h3>
+                    <div class="col-md-offset-1 col-md-4" style="margin-top: 10%">
+                        <svg height="200" width="200" version="1.0" xmlns="http://www.w3.org/2000/svg"
+                             style="overflow: hidden; position: relative;">
+                            {% if  cut_off == "200.0 100.0" %}
+                                {% if direction_1 == '1' %}
+                                    <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#d9301d"></circle>
+                                {% else %}
+                                    <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#ff9000"></circle>
+                                {% endif %}
+                            {% else %}
+                                <a href="#">
+                                    <path fill="#d9301d" stroke="#ffffff"
+                                          d="M100 100L200 100A100 100 0 {{ direction_1 }} 0 {{ cut_off }}Z"
+                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                                </a>
+                                <a href="#">
+                                    <path fill="#ff9000" stroke="#ffffff"
+                                          d="M100 100L{{ cut_off }}A100 100 0 {{ direction_2 }} 0 200 100Z"
+                                          style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                                </a>
+                            {% endif %}
+                        </svg>
+                    </div>
+                    <div class="col-md-offset-2 col-md-4" style="margin-top: 10%">
+                        <table class="table table-hover text-center">
+                            <thead>
+                            <tr class="info">
+                                <td>性别</td>
+                                <td></td>
+                                <td>人数</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="info">
+                                <td>男</td>
+                                <td>
+                                    <div style="width: 200%;background-color: #d9301d">&nbsp;</div>
+                                </td>
+                                <td>{{ num_men }}</td>
+                            </tr>
+                            <tr class="info">
+                                <td>女</td>
+                                <td>
+                                    <div style="width: 200%;background-color: #ff9000">&nbsp;</div>
+                                </td>
+                                <td>{{ num_women }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+
+            <h3 class="text-left" id="l6">
+                就诊情况
+            </h3>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <td>
+                        是否就诊
+                    </td>
+                    <td>
+                        人数
+                    </td>
+                    <td>
+                        比例
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class='info'>
+                    <td>
+                        已就诊
+                    </td>
+                    <td>
+                        {{ diagnosed }}
+                    </td>
+                    <td>
+                        <div style="width: 90%">
+                            <div class="row" style="background-color: whitesmoke">
+                                <a href="#" title="{{ diagnosed }}">
+                                    <div style="float:left; width: {{diagnosed_rate}}%;background-color: #cac8dd">&nbsp;</div>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class='info'>
+                    <td>
+                        未就诊
+                    </td>
+                    <td>
+                        {{ undiagnosed }}
+                    </td>
+                    <td>
+                        <div style="width: 90%">
+                            <div class="row" style="background-color: whitesmoke">
+                                <a href="#" title="{{ undiagnosed }}">
+                                    <div style="float:left; width: {{ undiagnosed_rate }}%;background-color: #cac8dd">&nbsp;</div>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <script>
-    $(document).ready(function(){
-        $('#disease').addClass('active');
-    });
+        $(document).ready(function () {
+            $('#disease').addClass('active');
+        });
     </script>
 {% endblock %}

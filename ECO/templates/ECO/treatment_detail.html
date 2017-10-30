@@ -33,6 +33,7 @@
                             {{the_treatment.treatment_info}}
                         </p>
                     </blockquote>
+
                     <h3 class="text-left" id="l2">
                         针对症状
                     </h3>
@@ -44,6 +45,9 @@
                                 </th>
                                 <th>
                                     使用人数
+                                </th>
+                                <th>
+                                    比例
                                 </th>
                             </tr>
                         </thead>
@@ -60,10 +64,20 @@
                                         {{s.num}}
                                     </a>
                                 </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ s.num_rate }}">
+                                                <div style="float:left; width: {{ s.num_rate }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
+
                     <h3 class="text-left" id="l3">
                         副作用
                     </h3>
@@ -75,6 +89,9 @@
                                 </th>
                                 <th>
                                     人数
+                                </th>
+                                <th>
+                                    比例
                                 </th>
                             </tr>
                         </thead>
@@ -91,29 +108,176 @@
                                         {{ s.num }}
                                     </a>
                                 </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ s.num_rate }}">
+                                                <div style="float:left; width: {{ s.num_rate }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
+
                     <h3 class="text-left" id="l4">
-                        评价
+                        评价（疗效）
                     </h3>
-                    <div class="row clearfix">
-                        <div class="col-md-6 column">
-                            <h4>
-                                疗效
-                            </h4>
+                    <div class="col-md-12">
+                        <div class="col-md-offset-1 col-md-4" style="margin-top: 1%">
+                             <svg height="200" width="200" version="1.0" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative;">
+                                 {% if effect_rate.0 == 1.0 %}
+                                    <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#d9301d"></circle>
+                                 {% elif effect_rate.1 == 1.0 %}
+                                    <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#ff9000"></circle>
+                                 {% elif effect_rate.2 == 1.0 %}
+                                    <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#fede31"></circle>
+                                 {% elif effect_rate.3 == 1.0 %}
+                                    <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#1ead44"></circle>
+                                 {% else %}
+                                    <a href="#">
+                                        <path fill="#d9301d" stroke="#ffffff" d="M100 100L200 100A100 100 0 {{ effect_angle.0 }} 0 {{ effect_cut_off.0 }}Z" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                                    </a>
+                                    <a href="#">
+                                        <path fill="#ff9000" stroke="#ffffff" d="M100 100L{{ effect_cut_off.0 }}A100 100 0 {{ effect_angle.1 }} 0 {{ effect_cut_off.1 }}Z" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                                    </a>
+                                    <a href="#">
+                                        <path fill="#fede31" stroke="#ffffff" d="M100 100L{{ effect_cut_off.1 }}A100 100 0 {{ effect_angle.2 }} 0 {{ effect_cut_off.2 }}Z" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                                    </a>
+                                    <a href="#">
+                                        <path fill="#1ead44" stroke="#ffffff" d="M100 100L{{ effect_cut_off.2 }}A100 100 0 {{ effect_angle.3 }} 0 200 100Z" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                                    </a>
+                                 {% endif %}
+                            </svg>
+                         </div>
+                        <div class="col-md-6" style="margin-top: 3%">
+                            <table class="table table-hover text-center">
+                                <thead>
+                                    <tr class="info">
+                                        <td>程度</td>
+                                        <td></td>
+                                        <td>人数</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="info">
+                                        <td>很好</td>
+                                        <td>
+                                            <div style="width: 200%;background-color: #d9301d">&nbsp;</div>
+                                        </td>
+                                        <td>{{ num_effect.0 }}</td>
+                                    </tr>
+                                    <tr class="info">
+                                        <td>良好</td>
+                                        <td>
+                                            <div style="width: 200%;background-color: #ff9000">&nbsp;</div>
+                                        </td>
+                                        <td>{{ num_effect.1 }}</td>
+                                    </tr>
+                                    <tr class="info">
+                                        <td>一般</td>
+                                        <td>
+                                            <div style="width: 200%;background-color: #fede31">&nbsp;</div>
+                                        </td>
+                                        <td>{{ num_effect.2 }}</td>
+                                    </tr>
+                                    <tr class="info">
+                                        <td>无效</td>
+                                        <td>
+                                            <div style="width: 200%;background-color: #1ead44">&nbsp;</div>
+                                        </td>
+                                        <td>{{ num_effect.3 }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col-md-6 column">
-                            <h4>
-                                副作用
-                            </h4>
+
+                    </div>
+
+                    <h3 class="text-left" id="l4">
+                        评价（副作用）
+                    </h3>
+                    <div class="col-md-12 column">
+                        <div class="col-md-offset-1 col-md-4" style="margin-top: 1%">
+                            <svg height="200" width="200" version="1.0" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative;">
+                                {% if side_rate.0 == 1.0 %}
+                                    <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#d9301d"></circle>
+                                {% elif side_rate.1 == 1.0 %}
+                                    <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#ff9000"></circle>
+                                {% elif side_rate.2 == 1.0 %}
+                                    <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#fede31"></circle>
+                                {% elif side_rate.3 == 1.0 %}
+                                    <circle cx="100" cy="100" r="100" stroke="#ffffff" fill="#1ead44"></circle>
+                                {% else %}
+                                    <a href="#">
+                                        <path fill="#d9301d" stroke="#ffffff" d="M100 100L200 100A100 100 0 {{ side_angle.0 }} 0 {{ side_cut_off.0 }}Z" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                                    </a>
+                                    <a href="#">
+                                        <path fill="#ff9000" stroke="#ffffff" d="M100 100L{{ side_cut_off.0 }}A100 100 0 {{ side_angle.1 }} 0 {{ side_cut_off.1 }}Z" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                                    </a>
+                                    <a href="#">
+                                        <path fill="#fede31" stroke="#ffffff" d="M100 100L{{ side_cut_off.1 }}A100 100 0 {{ side_angle.2 }} 0 {{ side_cut_off.2 }}Z" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                                    </a>
+                                    <a href="#">
+                                        <path fill="#1ead44" stroke="#ffffff" d="M100 100L{{ side_cut_off.2 }}A100 100 0 {{ side_angle.3 }} 0 200 100Z" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer;"></path>
+                                    </a>
+                                 {% endif %}
+                              </svg>
+                         </div>
+                        <div class="col-md-6" style="margin-top: 3%">
+                            <table class="table table-hover text-center">
+                                <thead>
+                                    <tr class="info">
+                                        <td>程度</td>
+                                        <td></td>
+                                        <td>人数</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="info">
+                                        <td>严重</td>
+                                        <td>
+                                            <div style="width: 200%;background-color: #d9301d">&nbsp;</div>
+                                        </td>
+                                        <td>{{ num_side.0 }}</td>
+                                    </tr>
+                                    <tr class="info">
+                                        <td>一般</td>
+                                        <td>
+                                            <div style="width: 200%;background-color: #ff9000">&nbsp;</div>
+                                        </td>
+                                        <td>{{ num_side.1 }}</td>
+                                    </tr>
+                                    <tr class="info">
+                                        <td>轻微</td>
+                                        <td>
+                                            <div style="width: 200%;background-color: #fede31">&nbsp;</div>
+                                        </td>
+                                        <td>{{ num_side.2 }}</td>
+                                    </tr>
+                                    <tr class="info">
+                                        <td>无影响</td>
+                                        <td>
+                                            <div style="width: 200%;background-color: #1ead44">&nbsp;</div>
+                                        </td>
+                                        <td>{{ num_side.3 }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+
                     <h3 class="text-left" id="l5">
                         使用时长
                     </h3>
                     <table class="table table-hover">
+                        <tr>
+                            <th>时长</th>
+                            <th>人数</th>
+                            <th>比例</th>
+                        </tr>
                         <tbody>
                             <tr class='info'>
                                 <td>
@@ -122,13 +286,31 @@
                                 <td>
                                     {{num_time.0}}
                                 </td>
-                                </tr>
-                                <tr class='info'>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ num_rate.0 }}">
+                                                <div style="float:left; width: {{ num_rate.0 }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class='info'>
                                 <td>
                                     1-6个月
                                 </td>
                                 <td>
                                     {{num_time.1}}
+                                </td>
+                                 <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ num_rate.1 }}">
+                                                <div style="float:left; width: {{ num_rate.1 }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr class='info'>
@@ -138,21 +320,47 @@
                                 <td>
                                     {{num_time.2}}
                                 </td>
-                                </tr>
-                                <tr class='info'>
+                                 <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ num_rate.2 }}">
+                                                <div style="float:left; width: {{ num_rate.2 }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class='info'>
                                 <td>
                                     1年以上
                                 </td>
                                 <td>
                                     {{num_time.3}}
                                 </td>
+                                 <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ num_rate.3 }}">
+                                                <div style="float:left; width: {{ num_rate.3 }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
+
                     <h3 class="text-left" id="l6">
                         费用支出
                     </h3>
                     <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>金额</th>
+                                <th>人数</th>
+                                <th>比例</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr class='info'>
                                 <td>
@@ -160,6 +368,15 @@
                                 </td>
                                 <td>
                                     {{ num_cost.0 }}
+                                </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ cost_rate.0 }}">
+                                                <div style="float:left; width: {{ cost_rate.0 }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr class='info'>
@@ -169,6 +386,15 @@
                                 <td>
                                     {{ num_cost.1 }}
                                 </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ cost_rate.1 }}">
+                                                <div style="float:left; width: {{ cost_rate.1 }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             <tr class='info'>
                                 <td>
@@ -176,6 +402,15 @@
                                 </td>
                                 <td>
                                     {{ num_cost.2 }}
+                                </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ cost_rate.2 }}">
+                                                <div style="float:left; width: {{ cost_rate.2 }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr class='info'>
@@ -185,6 +420,15 @@
                                 <td>
                                     {{ num_cost.3 }}
                                 </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ cost_rate.3 }}">
+                                                <div style="float:left; width: {{ cost_rate.3 }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             <tr class='info'>
                                 <td>
@@ -192,6 +436,15 @@
                                 </td>
                                 <td>
                                     {{ num_cost.4 }}
+                                </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ cost_rate.4 }}">
+                                                <div style="float:left; width: {{ cost_rate.4 }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
