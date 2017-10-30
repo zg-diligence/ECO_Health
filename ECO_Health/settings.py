@@ -52,7 +52,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'eco',
         'USER': 'root',
-        'PASSWORD': '0526',
+        'PASSWORD': '5426030',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -82,7 +82,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 LOGIN_URL = '/ECO/'
 
@@ -90,6 +90,7 @@ LOGIN_URL = '/ECO/'
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR,'collected_static')  #用于收集部署
 STATICFILES_DIRS = [
+    #定义不属于任何一个应用的静态文件的位置（这里是项目目录下的static文件夹）
     os.path.join(BASE_DIR, "static"),
 ]
 

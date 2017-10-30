@@ -193,7 +193,7 @@ def load_data_for_treatment_page(treatment_id):
         else:
             num_cost[4] += 1
 
-        if s in e.negative_symptoms.all():
+        for s in e.negative_symptoms.all():
             flag = False
             index = 0
             for i,x in enumerate(negative_symptoms):
