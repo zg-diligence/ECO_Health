@@ -152,25 +152,6 @@ def treatment_detail(request, treatment_id):
 
 @csrf_exempt
 @login_required
-def person_index(request):
-    """person_disease同"""
-    user = request.user
-    try:
-        whole_user = user.userinfo
-        disease_id = whole_user.diseases.all()[0].id
-    except IndexError:
-        return render_to_response('404.html')
-    else:
-        keys = ['disease', 'treatments_for_symptoms', 'treatments_for_disease',
-                'evaluations', 'ages', 'diagnosed', 'undiagnosed', 'num_men', 'num_women']
-        values = load_data_for_disease_page(disease_id)
-        context = dict(zip(keys, values))
-        context = calc_disease_proportion(values, context)
-        return render(request, 'ECO/person_disease.html', context)
-
-
-@csrf_exempt
-@login_required
 def person_disease(request):
     """person_disease同"""
     user = request.user
@@ -243,12 +224,6 @@ def person_diagram(request):
 
 @csrf_exempt
 @login_required
-def social_index(request):
-    return render(request, 'ECO/social_index.html')
-
-
-@csrf_exempt
-@login_required
 def social_friendstate(request):
     user = request.user
 
@@ -268,8 +243,6 @@ def social_friendstate(request):
                 message_list.append([follow_user,img_path,temp.content,temp.like,temp.post_time.strftime("%Y-%m-%d %H:%M:%S")])
 
     message_list = sorted(message_list,key= lambda m:m[4],reverse=True)
-
-    print(message_list)
 
     return render(request,'ECO/social_friendstate.html',{'message_list':message_list})
 
