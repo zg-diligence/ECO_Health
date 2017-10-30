@@ -6,11 +6,8 @@ from django.shortcuts import render, render_to_response, \
     HttpResponse, HttpResponseRedirect
 
 import json
-import math
 from .method import *
 from .models import *
-
-R = 100
 
 @csrf_exempt
 def page_not_found(request):
@@ -103,6 +100,17 @@ def symptom_detail(request, symptom_id):
     keys = ['the_symptom', 'disease_and_num', 'treatment_and_evaluations', 'counts']
     values = load_data_for_symptom_page(symptom_id)
     context = dict(zip(keys, values))
+
+    # calc proportion of different diseases for one symptom
+    total_num = sum([item['num'] for item in context['disease_and_num']])
+    for item in context['disease_and_num']:
+        item['num_rate'] = 100*item['num']/total_num
+
+    # calc proportion of avaluations for each treatment
+    total_num = sum([item['num'] for item in context['treatment_and_evaluations']])
+    for item in context['treatment_and_evaluations']:
+        item['num_rate'] = 100 * item['num'] / total_num
+
     return render(request, 'ECO/symptom_detail.html', context)
 
 
@@ -120,38 +128,7 @@ def disease_detail(request, disease_id):
     values = load_data_for_disease_page(disease_id)
     context = dict(zip(keys, values))
     context['counts'] = [len(context[keys[1]]), len(context[keys[2]]), len(context[keys[3]])]
-
-    # 计算治疗手段人数比例
-    total_num = sum([treatment['num'] for treatment in context['treatments_for_disease']])
-    for treatment in context['treatments_for_disease']:
-        treatment['num_rate'] = 100*treatment['num']/total_num
-
-    # 计算疗效评分人数比例
-    print(context['evaluations'])
-    for evaluation in context['evaluations']:
-        score_sum = sum(evaluation['score'])
-        # evaluation['score_rate'] = [40,20,10,20]
-        evaluation['score_rate'] = [100*score/score_sum for score in evaluation['score']]
-
-    # 计算年龄段比例
-    context['age_rate'] = [100*num/sum(context['ages']) for num in context['ages']]
-
-    # 计算男女比例 决定比例图参数
-    men_to_wemen = values[-2]/(values[-2] + values[-1])
-    cut_x = R*(1+math.cos(2*math.pi*men_to_wemen))
-    cut_y = R*(1-math.sin(2*math.pi*men_to_wemen))
-    if math.fabs(cut_x-200) < 1e-6 and math.fabs(cut_y-100) < 1e-6:
-        cut_x, cut_y = 200.0, 100.0
-
-    context['direction_1'] = '0' if cut_y < 100 else '1'
-    context['direction_2'] = '1' if cut_y < 100 else '0'
-    context['cut_off'] = str(cut_x) + " " + str(cut_y)
-    print(context['cut_off'])
-
-    # 计算就诊情况比例
-    is_to_not = values[-4]/(values[-3]+values[-4])*100
-    context['diagnosed_rate'] = is_to_not
-    context['undiagnosed_rate'] = 100 - is_to_not
+    context = calc_disease_proportion(values, context)
 
     return render(request, 'ECO/disease_detail.html', context)
 
@@ -169,40 +146,7 @@ def treatment_detail(request, treatment_id):
             'num_effect', 'num_cost', 'num_time', 'negative_symptoms', 'counts']
     values = load_data_for_treatment_page(treatment_id)
     context = dict(zip(keys, values))
-
-    # 计算治疗手段针对的各症状人数比例
-    total_num = sum([item['num'] for item in context['target_symptom_and_num']])
-    for item in context['target_symptom_and_num']:
-        item['num_rate'] = 100*item['num']/total_num
-
-    # 计算副作用各症状人数比例
-    total_num = sum([item['num'] for item in context['negative_symptoms']])
-    for item in context['negative_symptoms']:
-        item['num_rate'] = 100*item['num']/total_num
-        print(item['num_rate'])
-
-    # 计算治疗手段有效性程度人数比例以及饼图参数
-    # context['effect_rate'] = [0.2, 0.1, 0.3, 0.4]
-    context['effect_rate'] = [num/sum(context['num_effect']) for num in context['num_effect']]
-    context['effect_angle'] = [0 if rate < 0.5 else 1 for rate in context['effect_rate']]
-    rate_sum = [sum(context['effect_rate'][:i]) for i in [1,2,3,4]]
-    context['effect_cut_off'] = [str(R*(1+math.cos(2*math.pi*rate))) + ' ' + str(R*(1-math.sin(2*math.pi*rate))) for rate in rate_sum]
-    # print(context['effect_rate'], context['effect_angle'], context['effect_cut_off'])
-
-    # 计算治疗手段副作用程度人数比例以及饼图参数
-    # context['side_rate'] = [0.2, 0.1, 0.3, 0.4]
-    context['side_rate'] = [num/sum(context['num_side']) for num in context['num_side']]
-    context['side_angle'] = [0 if rate < 0.5 else 1 for rate in context['side_rate']]
-    rate_sum = [sum(context['side_rate'][:i]) for i in [1,2,3,4]]
-    context['side_cut_off'] = [str(R*(1+math.cos(2*math.pi*rate))) + ' ' + str(R*(1-math.sin(2*math.pi*rate))) for rate in rate_sum]
-    print(context['side_rate'], context['side_angle'], context['side_cut_off'])
-
-    # 计算使用时长人数比例
-    context['num_rate'] = [100*num/sum(context['num_time']) for num in context['num_time']]
-
-    # 计算花销人数比例
-    context['cost_rate'] = [100*num/sum(context['num_cost']) for num in context['num_cost']]
-
+    context = calc_treatment_proportion(values, context)
     return render(request, 'ECO/treatment_detail.html', context)
 
 
@@ -221,6 +165,7 @@ def person_index(request):
                 'evaluations', 'ages', 'diagnosed', 'undiagnosed', 'num_men', 'num_women']
         values = load_data_for_disease_page(disease_id)
         context = dict(zip(keys, values))
+        context = calc_disease_proportion(values, context)
         return render(request, 'ECO/person_disease.html', context)
 
 
@@ -239,6 +184,7 @@ def person_disease(request):
                 'evaluations', 'ages', 'diagnosed', 'undiagnosed', 'num_men', 'num_women']
         values = load_data_for_disease_page(disease_id)
         context = dict(zip(keys, values))
+        context = calc_disease_proportion(values, context)
         return render(request, 'ECO/person_disease.html', context)
 
 
@@ -273,6 +219,7 @@ def person_treatment(request):
                 'evaluations', 'ages', 'diagnosed', 'undiagnosed', 'num_men', 'num_women']
         values = load_data_for_disease_page(disease_id)
         context = dict(zip(keys, values))
+        context = calc_disease_proportion(values, context)
         return render(request, 'ECO/person_treatment.html', context)
 
 

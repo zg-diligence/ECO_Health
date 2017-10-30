@@ -26,6 +26,7 @@
                             {{the_symptom.symptom_infor}}
                         </p>
                     </blockquote>
+
                     <h3 class="text-left" id="l2">
                         对应疾病
                     </h3>
@@ -37,6 +38,9 @@
                                 </th>
                                 <th>
                                     病友人数
+                                </th>
+                                <th>
+                                    比例
                                 </th>
                             </tr>
                         </thead>
@@ -53,10 +57,20 @@
                                         {{d.num}}
                                     </a>
                                 </td>
+                                <td>
+                                    <div style="width: 90%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ d.num_rate }}">
+                                                <div style="float:left; width: {{ d.num_rate }}%;background-color: #cac8dd">&nbsp;</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
+
                     <h3 class="text-left" id="l3">
                         治疗手段
                     </h3>
@@ -86,11 +100,19 @@
                                     </a>
                                 </td>
                                 <td>
-                                    {{ t.num }}
+                                    <div style="width: 80%">
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <a href="#" title="{{ t.num_rate }}">
+                                                <div style="float:left; width: {{ t.num_rate }}%;background-color: #cac8dd">{{ t.num }}</div>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </td>
+
                                 <td>
 
                                 </td>
+
                                 <td>
 
                                 </td>
