@@ -9,6 +9,7 @@ import json
 from .method import *
 from .models import *
 
+
 @csrf_exempt
 def page_not_found(request):
     return render_to_response('404.html')
@@ -139,6 +140,8 @@ def treatment_detail(request, treatment_id):
     return render(request, 'ECO/treatment_detail.html', context)
 
 
+@csrf_exempt
+@login_required
 def person_disease(request):
     """person_disease同"""
     user = request.user
@@ -194,19 +197,19 @@ def person_treatment(request):
 @csrf_exempt
 @login_required
 def person_info(request):
-    pass
+    return render(request, 'ECO/person_info.html')
 
 
 @csrf_exempt
 @login_required
 def person_update(request):
-    pass
+    return render(request, 'ECO/person_update.html')
 
 
 @csrf_exempt
 @login_required
 def person_diagram(request):
-    pass
+    return render(request, 'ECO/person_diagram.html')
 
 
 @csrf_exempt
@@ -221,17 +224,18 @@ def social_friendstate(request):
         temps = follow_user.message_set.all()
         img_path = follow_user.userinfo.image.name
 
-        if img_path !='':
+        if img_path != '':
             index = follow_user.userinfo.image.name.find('/media')
             img_path = follow_user.userinfo.image.name[index:]
 
         if len(temps) != 0:
             for temp in temps:
-                message_list.append([follow_user,img_path,temp.content,temp.like,temp.post_time.strftime("%Y-%m-%d %H:%M:%S")])
+                message_list.append(
+                    [follow_user, img_path, temp.content, temp.like, temp.post_time.strftime("%Y-%m-%d %H:%M:%S")])
 
-    message_list = sorted(message_list,key= lambda m:m[4],reverse=True)
+    message_list = sorted(message_list, key=lambda m: m[4], reverse=True)
 
-    return render(request,'ECO/social_friendstate.html',{'message_list':message_list})
+    return render(request, 'ECO/social_friendstate.html', {'message_list': message_list})
 
 
 @csrf_exempt
@@ -255,8 +259,10 @@ def social_friendlist(request):
                 index = f.user1.userinfo.image.name.find('/media')
                 break
 
-    you_follow = [[r.user2.userinfo,r.user2.userinfo.image.name[index:],r.user2.userinfo.age,r.user2.userinfo.diseases.all()[0]] for r in you_follow_relation]
-    follow_you = [[r.user1.userinfo,r.user1.userinfo.image.name[index:],r.user1.userinfo.age,r.user1.userinfo.diseases.all()[0]]for r in follow_you_relation]
+    you_follow = [[r.user2.userinfo, r.user2.userinfo.image.name[index:], r.user2.userinfo.age,
+                   r.user2.userinfo.diseases.all()[0]] for r in you_follow_relation]
+    follow_you = [[r.user1.userinfo, r.user1.userinfo.image.name[index:], r.user1.userinfo.age,
+                   r.user1.userinfo.diseases.all()[0]] for r in follow_you_relation]
 
     context = {'you_follow': you_follow, 'follow_you': follow_you}
     return render(request, 'ECO/social_friendlist.html', context)
@@ -265,7 +271,7 @@ def social_friendlist(request):
 @csrf_exempt
 @login_required
 def social_sendstate(request):
-    return render(request,'ECO/social_sendstate.html')
+    return render(request, 'ECO/social_sendstate.html')
 
 
 @csrf_exempt
@@ -282,13 +288,13 @@ def social_newfriend(request):
     for p in disease.userinfo_set.all():
         if p.user.username != username:
             img_path = p.image.name
-            if p.image.name !='':
+            if p.image.name != '':
                 index = p.image.name.find('/media')
                 img_path = p.image.name[index:]
             age = p.age
             name = p.user.username
             disease_name = disease.disease_name
-            temp = [img_path,name,age,disease_name]
+            temp = [img_path, name, age, disease_name]
             people_by_disease.append(temp)
 
     people_by_symptom = []
@@ -297,13 +303,13 @@ def social_newfriend(request):
         for p in peoples:
             if p.user.username != username:
                 img_path = p.image.name
-                if p.image.name !='':
+                if p.image.name != '':
                     index = p.image.name.find('/media')
                     img_path = p.image.name[index:]
                 age = p.age
                 name = p.user.username
                 symptom_name = s.symptom_name
-                temp = [img_path,name,age,symptom_name]
+                temp = [img_path, name, age, symptom_name]
                 people_by_symptom.append(temp)
 
     people_by_treatment = []
@@ -312,24 +318,23 @@ def social_newfriend(request):
         for p in peoples:
             if p.user.username != username:
                 img_path = p.image.name
-                if p.image.name !='':
+                if p.image.name != '':
                     index = p.image.name.find('/media')
                     img_path = p.image.name[index:]
                 age = p.age
                 name = p.user.username
                 treatment_name = t.treatment_name
-                temp = [img_path,name,age,treatment_name]
+                temp = [img_path, name, age, treatment_name]
                 people_by_treatment.append(temp)
 
-    keys = ['people_by_disease','people_by_symptom','people_by_treatment']
-    values = [people_by_disease,people_by_symptom,people_by_treatment]
-    context = dict(zip(keys,values))
+    keys = ['people_by_disease', 'people_by_symptom', 'people_by_treatment']
+    values = [people_by_disease, people_by_symptom, people_by_treatment]
+    context = dict(zip(keys, values))
 
-    return  render(request,'ECO/social_newfriend.html',context)
+    return render(request, 'ECO/social_newfriend.html', context)
 
 
 @csrf_exempt
 @login_required
 def social_heart(request):
     return render(request, 'ECO/social_heart.html')
-
