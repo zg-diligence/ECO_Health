@@ -150,8 +150,6 @@ def treatment_detail(request, treatment_id):
     return render(request, 'ECO/treatment_detail.html', context)
 
 
-@csrf_exempt
-@login_required
 def person_disease(request):
     """person_disease同"""
     user = request.user
