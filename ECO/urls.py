@@ -17,7 +17,7 @@ treatment_pattern = [
 ]
 
 person_pattern = [
-    url(r'^$',person_index,name='person_index'),
+    url(r'^$',person_disease,name='person_index'),
     url(r'^person_disease/$',person_disease,name='person_disease'),
     url(r'^person_symptom/$',person_symptom,name='person_symptom'),
     url(r'^person_treatment/$',person_treatment,name='person_treatment'),
@@ -27,7 +27,7 @@ person_pattern = [
 ]
 
 social_pattern = [
-    url(r'^$', social_index, name='social_index'),
+    url(r'^$',social_friendstate, name='social_index'),
     url(r'social_friendstate/$',social_friendstate,name='social_friendstate'),
     url(r'social_friendlist/$',social_friendlist,name='social_friendlist'),
     url(r'social_sendstate/$',social_sendstate,name='social_sendstate'),

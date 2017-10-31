@@ -55,7 +55,7 @@ class UserInfo(models.Model):
 
     fs = FileSystemStorage(location='/media/head')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(blank=True, upload_to='head')
+    image = models.ImageField(blank=True, upload_to=BASE_DIR+'/media/head')
     choice_index = (('F', '女'), ('M', '男'))
     sex = models.CharField(max_length=10, default="M", choices=choice_index)
     age = models.IntegerField()
@@ -108,3 +108,6 @@ class Comment(models.Model):
 class Relation(models.Model):
     user1 = models.ForeignKey(User, related_name='user1')
     user2 = models.ForeignKey(User, related_name='user2')
+
+    def __str__(self):
+        return  self.user1.username + '  follow  ' + self.user2.username
