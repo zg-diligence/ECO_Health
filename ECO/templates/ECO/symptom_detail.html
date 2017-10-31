@@ -91,15 +91,15 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             {% for t in treatment_and_evaluations %}
                             <tr class="info">
-                                <td>
+                                <td style="width: 80px">
                                     <a href="{% url 'ECO:treatment_detail' t.treatment.id %}">
                                         {{t.treatment.treatment_name}}
                                     </a>
                                 </td>
-                                <td>
+                                <td style="width: 120px">
                                     <div style="width: 80%">
                                         <div class="row" style="background-color: whitesmoke">
                                             <a href="#" title="{{ t.num_rate }}">
@@ -109,12 +109,22 @@
                                     </div>
                                 </td>
 
-                                <td>
-
+                                <td style="width: 120px">
+                                    <div class="row" style="width: 95%">
+                                        <a href="#" title="极好{{ t.effect_rate.0 }}"><div style="float:left; width: {{ t.effect_rate.0 }}%;background-color: #d9301d">&nbsp;</div></a>
+                                        <a href="#" title="良好{{ t.effect_rate.1 }}"><div style="float:left; width: {{ t.effect_rate.1 }}%;background-color: #ff9000">&nbsp;</div></a>
+                                        <a href="#" title="一般{{ t.effect_rate.2 }}"><div style="float:left; width: {{ t.effect_rate.2 }}%;background-color: #fede31">&nbsp;</div></a>
+                                        <a href="#" title="无效{{ t.effect_rate.3 }}"><div style="float:left; width: {{ t.effect_rate.3 }}%;background-color: #1ead44">&nbsp;</div></a>
+                                    </div>
                                 </td>
 
-                                <td>
-
+                                <td style="width: 120px;">
+                                    <div class="row" style="width: 95%">
+                                        <a href="#" title="严重{{ t.side_rate.0 }}"><div style="float:left; width: {{ t.side_rate.0 }}%;background-color: #0056c2">&nbsp;</div></a>
+                                        <a href="#" title="一般{{ t.side_rate.1 }}"><div style="float:left; width: {{ t.side_rate.1 }}%;background-color: #3f80d1">&nbsp;</div></a>
+                                        <a href="#" title="轻微{{ t.side_rate.2 }}"><div style="float:left; width: {{ t.side_rate.2 }}%;background-color: #7faae0">&nbsp;</div></a>
+                                        <a href="#" title="无影响{{ t.side_rate.3 }}"><div style="float:left; width: {{ t.side_rate.3 }}%;background-color: #bfd5f0">&nbsp;</div></a>
+                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}

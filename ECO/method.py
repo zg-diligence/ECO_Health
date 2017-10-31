@@ -267,8 +267,24 @@ def load_data_for_symptom_page(symptom_id):
     counts.append(len(disease_and_num))
     counts.append(len(treatment_and_evaluations))
 
-
     return  the_symptom,disease_and_num,treatment_and_evaluations,counts
+
+def calc_symptom_proportion(context):
+    # calc proportion of different diseases for one symptom
+    total_num = sum([item['num'] for item in context['disease_and_num']])
+    for item in context['disease_and_num']:
+        item['num_rate'] = 100 * item['num'] / total_num
+
+    # calc proportion of avaluations for each treatment
+    total_num = sum([item['num'] for item in context['treatment_and_evaluations']])
+    for item in context['treatment_and_evaluations']:
+        item['num_rate'] = 100 * item['num'] / total_num
+
+    for item in context['treatment_and_evaluations']:
+        item['side_rate'] = [100 * num / sum(item['num_side']) for num in item['num_side']]
+        item['effect_rate'] = [100 * num / sum(item['num_effect']) for num in item['num_effect']]
+
+    return context
 
 def calc_disease_proportion(values, context):
     import math
@@ -304,7 +320,7 @@ def calc_disease_proportion(values, context):
 
     return context
 
-def calc_treatment_proportion(values, context):
+def calc_treatment_proportion(context):
     import math
     R = 100
 
