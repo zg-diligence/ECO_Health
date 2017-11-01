@@ -347,8 +347,6 @@ def social_newfriend(request):
     values = [people_by_disease, people_by_symptom, people_by_treatment]
     context = dict(zip(keys, values))
 
-    print(people_by_symptom)
-
     return render(request, 'ECO/social_newfriend.html', context)
 
 
