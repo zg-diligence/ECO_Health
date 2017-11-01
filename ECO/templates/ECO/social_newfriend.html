@@ -20,22 +20,23 @@
                         {% for p in people_by_disease %}
                             <div class="row clearfix">
                                 <div class="col-md-2 column">
+                                    <br>
                                     <img onerror="this.src='/media/head/default.jpg'" src="{{ p.0 }}"height="60" width="60"  class="img-circle" />
                                 </div>
-                                <div class="col-md-4 column">
+                                <div class="col-md-6 column">
                                 <h3>
                                     {{ p.1 }}
                                     &nbsp;&nbsp;
                                     {{ p.2 }}岁
                                     &nbsp;&nbsp;
-                                    {% for t in p.3 %}
-                                    <font color="red">
-                                    {{ t }}
-                                    </font>
-                                    {% endfor %}
                                 </h3>
+                                    <font color="red">
+                                    {% for t in p.3 %}
+                                    {{ t }}
+                                    {% endfor %}
+                                    </font>
                                 </div>
-                                <div class="col-md-6 column">
+                                <div class="col-md-4 column">
                                     <br>
                                     <span class="glyphicon glyphicon-heart" style="color: rgb(255, 0, 0);font-size: 24px;"></span>
                                     &nbsp;&nbsp;
@@ -51,22 +52,23 @@
 					    {% for p in people_by_symptom %}
                             <div class="row clearfix">
                                 <div class="col-md-2 column">
+                                    <br>
                                     <img onerror="this.src='/media/head/default.jpg'" src="{{ p.0 }}"height="60" width="60"  class="img-circle" />
                                 </div>
-                                <div class="col-md-4 column">
+                                <div class="col-md-6 column">
                                 <h3>
                                     {{ p.1 }}
                                     &nbsp;&nbsp;
                                     {{ p.2 }}岁
                                     &nbsp;&nbsp;
-                                    {% for t in p.3 %}
-                                    <font color="red">
-                                    {{ t }}
-                                    </font>
-                                    {% endfor %}
                                 </h3>
+                                    <font color="red">
+                                    {% for t in p.3 %}
+                                    {{ t }}
+                                    {% endfor %}
+                                    </font>
                                 </div>
-                                <div class="col-md-6 column">
+                                <div class="col-md-4 column">
                                     <br>
                                     <span class="glyphicon glyphicon-heart" style="color: rgb(255, 0, 0);font-size: 24px;"></span>
                                     &nbsp;&nbsp;
@@ -82,22 +84,23 @@
 					    {% for p in people_by_treatment %}
                             <div class="row clearfix">
                                 <div class="col-md-2 column">
+                                    <br>
                                     <img onerror="this.src='/media/head/default.jpg'" src="{{ p.0 }}"height="60" width="60"  class="img-circle" />
                                 </div>
-                                <div class="col-md-4 column">
+                                <div class="col-md-6 column">
                                 <h3>
                                     {{ p.1 }}
                                     &nbsp;&nbsp;
                                     {{ p.2 }}岁
                                     &nbsp;&nbsp;
-                                    {% for t in p.3 %}
-                                    <font color="red">
-                                    {{ t }}
-                                    </font>
-                                    {% endfor %}
                                 </h3>
+                                    <font color="red">
+                                    {% for t in p.3 %}
+                                    {{ t }}
+                                    {% endfor %}
+                                    </font>
                                 </div>
-                                <div class="col-md-6 column">
+                                <div class="col-md-4 column">
                                     <br>
                                     <span class="glyphicon glyphicon-heart" style="color: rgb(255, 0, 0);font-size: 24px;"></span>
                                     &nbsp;&nbsp;

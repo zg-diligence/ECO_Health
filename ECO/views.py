@@ -309,6 +309,7 @@ def social_newfriend(request):
                     index = p.image.name.find('/media')
                     img_path = p.image.name[index:]
                 age = p.age
+                name = p.user.username
 
                 symptom_name = []
                 symptom_name.append(s.symptom_name)
@@ -317,7 +318,7 @@ def social_newfriend(request):
             else:
                 for ps in people_by_symptom:
                     if ps[1] == p.user.username:
-                        ps[4].append(s.symptom_name)
+                        ps[3].append(s.symptom_name)
 
     people_by_treatment = []
     people_key = []
@@ -334,17 +335,19 @@ def social_newfriend(request):
                 name = p.user.username
 
                 treatment_name = []
-                symptom_name.append(t.treatment_name)
+                treatment_name.append(t.treatment_name)
                 temp = [img_path,name,age,treatment_name]
-                people_by_symptom.append(temp)
+                people_by_treatment.append(temp)
             else:
                 for ps in people_by_treatment:
                     if ps[1] == p.user.username:
-                        ps[4].append(t.treatment_name)
+                        ps[3].append(t.treatment_name)
 
     keys = ['people_by_disease', 'people_by_symptom', 'people_by_treatment']
     values = [people_by_disease, people_by_symptom, people_by_treatment]
     context = dict(zip(keys, values))
+
+    print(people_by_symptom)
 
     return render(request, 'ECO/social_newfriend.html', context)
 
