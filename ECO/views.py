@@ -303,34 +303,48 @@ def social_newfriend(request):
             people_by_disease.append(temp)
 
     people_by_symptom = []
+    people_key = []
     for s in symptoms:
         peoples = s.userinfo_set.all()
         for p in peoples:
-            if p.user.username != username:
+            if (p.user.username not in people_key) and p.user.username!=username :
+                people_key.append(p.user.username)
                 img_path = p.image.name
                 if p.image.name !='':
                     index = p.image.name.find('/media')
                     img_path = p.image.name[index:]
                 age = p.age
                 name = p.user.username
-                symptom_name = s.symptom_name
+                symptom_name = []
+                symptom_name.append(s.symptom_name)
                 temp = [img_path,name,age,symptom_name]
                 people_by_symptom.append(temp)
+            else:
+                for ps in people_by_symptom:
+                    if ps[1] == p.user.username:
+                        ps[4].append(s.symptom_name)
 
     people_by_treatment = []
+    people_key = []
     for t in treatments:
         peoples = t.userinfo_set.all()
         for p in peoples:
-            if p.user.username != username:
+            if (p.user.username not in people_key) and p.user.username!=username :
+                people_key.append(p.user.username)
                 img_path = p.image.name
                 if p.image.name !='':
                     index = p.image.name.find('/media')
                     img_path = p.image.name[index:]
                 age = p.age
                 name = p.user.username
-                treatment_name = t.treatment_name
+                treatment_name = []
+                symptom_name.append(t.treatment_name)
                 temp = [img_path,name,age,treatment_name]
-                people_by_treatment.append(temp)
+                people_by_symptom.append(temp)
+            else:
+                for ps in people_by_treatment:
+                    if ps[1] == p.user.username:
+                        ps[4].append(t.treatment_name)
 
     keys = ['people_by_disease','people_by_symptom','people_by_treatment']
     values = [people_by_disease,people_by_symptom,people_by_treatment]
