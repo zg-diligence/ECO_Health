@@ -16,4 +16,4 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ECO_Health.settings")
 
 application = get_wsgi_application()
 
-sys.path.append('C:/Users/gzhang/Desktop/ECO_Health')
+sys.path.append('C:/Users/Administrator/PythonWeb/ECO_Health')
