@@ -1,20 +1,62 @@
 {% extends "ECO/base.html" %}
 
-{% block list %}
+
+{% block index %}
     <div class="row clearfix">
-        {% if all_disease %}
+		<div class="col-md-6 column">
+			<h3 class="text-info">
+				已收录疾病
+			</h3>
+
+            <blockquote>
+				<p>
+					目前已与哈尔滨工业大学电子健康研究所合作，获得克罗恩病的相关数据，以及少量糖尿病、抑郁症相关数据
+				</p> <small> Eco-health</small>
+			</blockquote>
+
             <ul>
-             {% for disease in all_disease %}
-                <li><a href="{% url 'ECO:disease_detail' disease.id %}">{{ disease.disease_name }}</a></li>
-             {% endfor %}
+
+             <!--{% for disease in all_disease %}-->
+                <!--<li><a href="{% url 'ECO:disease_detail' disease.id %}">{{ disease.disease_name }}</a></li>-->
+             <!--{% endfor %}-->
+            <li><a href="{% url 'ECO:disease_detail' 3 %}">克罗恩病</a></li>
+            <li><a href="{% url 'ECO:disease_detail' 2 %}">抑郁症</a></li>
+            <li><a href="{% url 'ECO:disease_detail' 1 %}">糖尿病</a></li>
             </ul>
-        {% else %}
-            <p>No disease are available.</p>
-        {% endif %}
-    </div>
+
+		</div>
+		<div class="col-md-6 column">
+			<h3 class="text-success">
+				即将收录疾病
+			</h3>
+            <blockquote>
+				<p>
+					即将凭借哈尔滨工业大学与哈尔滨医科大学合作成立的医工学院的关系，获得哈尔滨医科大学的罕见病相关研究数据
+				</p> <small> Eco-health</small>
+			</blockquote>
+
+            <ul>
+                <li>类风湿关节炎</li>
+                <li>慢性肾炎</li>
+                <li>系统性红斑狼疮</li>
+                <li>甲亢</li>
+                <li>肝硬化</li>
+                <li>肺结核</li>
+                <li>白化病</li>
+                <li>肺癌</li>
+                <li>Fabry病</li>
+                <li>肢端肥大症</li>
+                <li>特发性肺动脉高压病</li>
+                <li>苯酮尿症</li>
+                <li>线粒体病</li>
+                <li>地中海贫血</li>
+            </ul>
+		</div>
+	</div>
+
     <script>
     $(document).ready(function(){
         $("#disease").addClass("active");
     });
-</script>
+    </script>
 {% endblock %}

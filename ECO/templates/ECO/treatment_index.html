@@ -18,3 +18,34 @@
     });
     </script>
 {% endblock %}
+
+{% block index %}
+
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="jumbotron">
+				<h2 class="text-info">
+                    以下是平台已有病友为我们提供的治疗手段信息。你的分享将使我们更加了解您，使我们更加了解相关的疾病和症状，也将帮助到更多的病友。
+				</h2>
+				<p>
+					 <a class="btn btn-primary btn-large" href="#">分享</a>
+				</p>
+			</div>
+			<h3 class="text-info">
+				已收录治疗手段
+			</h3>
+            <ul>
+                {% for treatment in all_treatment %}
+                    <li><a href="{% url 'ECO:treatment_detail' treatment.id %}">{{ treatment.treatment_name }}</a></li>
+                {% endfor %}
+            </ul>
+		</div>
+	</div>
+
+    <script>
+    $(document).ready(function(){
+        $('#treatment').addClass('active');
+    });
+    </script>
+
+{% endblock %}
